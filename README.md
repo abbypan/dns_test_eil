@@ -16,7 +16,7 @@ EIL's OPTION-CODE : 0xFDF0
 
     recv_eil_aut.pl : demo authority server, listen on 127.0.0.1:53
 
-    recv_eil_rec.pl : demo recursive server, listen on 127.0.0.1:5354
+    recv_eil_rec.pl : demo recursive server, listen on 127.0.0.1:5354, send eil dns query to authority 127.0.0.1:53
     
     send_eil.pl : client, send eil dns query to recursive 127.0.0.1:5354
 
