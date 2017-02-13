@@ -2,7 +2,7 @@
 
 dns test eil
 
-EIL's OPTION-CODE : 0xFDF0
+EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
 ## INSTALL
 
