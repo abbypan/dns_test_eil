@@ -300,7 +300,15 @@ Stub DNS query A resource record of www.example.com .
 
 ## P-Model
 
-Resolution Path: Stub DNS -> Local Forwarding Resolver (61.48.7.2) -> Public Forwarding Resolver(AliDNS, 223.5.5.5) -> Public Recursive Resolver(AliDNS, 202.108.250.231) -> Authoritative Server
+     Stub DNS 
+
+     -> Local Forwarding Resolver (61.48.7.2) 
+
+     -> Public Forwarding Resolver(AliDNS, 223.5.5.5) 
+
+     -> Public Recursive Resolver(AliDNS, 202.108.250.231) 
+
+     -> Authoritative Server
 
 Public Forwarding Resolver 223.5.5.5 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "010", "ISP": "UNI" } based on 61.48.7.2.
 
@@ -308,7 +316,15 @@ P-Model will not leak client subnet to Authoritative Server.
 
 ## I-Model
 
-Resolution Path: Stub DNS -> Local Forwarding Resolver -> ISP Forwarding Resolver(202.106.196.115) -> ISP Recursive Resolver(61.135.23.92) -> Authoritative Server
+     Stub DNS 
+
+     -> Local Forwarding Resolver 
+
+     -> ISP Forwarding Resolver(202.106.196.115) 
+
+     -> ISP Recursive Resolver(61.135.23.92) 
+
+     -> Authoritative Server
 
 ISP Recursive Resolver 61.135.23.92 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "010", "ISP": "UNI" } based on 61.135.23.92.
 
@@ -316,7 +332,13 @@ If Authoritative Server doesn't know much about 61.135.23.92, EIL will be helpfu
 
 ## L-Model
 
-Resolution Path: Stub DNS -> Local Fowarding Resolver(58.60.109.234) -> ... -> Authoritative Server
+     Stub DNS 
+
+     -> Local Fowarding Resolver(58.60.109.234) 
+     
+     -> ... 
+
+     -> Authoritative Server
 
 Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is { "COUNTRY-CODE": "CN", "AREA-CODE": "0755", "ISP": "TEL" } based on 58.60.109.234.
 
