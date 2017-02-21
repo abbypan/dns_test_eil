@@ -7,6 +7,8 @@ EIL draft: [ISP Location in DNS Queries](ietf_draft/draft.txt)
 EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
 ## INSTALL
+ 
+    cpan App::cpanminus
 
     cpanm Net::DNS JSON File::Slurp
 
