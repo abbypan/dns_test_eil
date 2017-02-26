@@ -4,6 +4,8 @@ dns test eil
 
 EIL draft: [ISP Location in DNS Queries](ietf_draft/draft.txt) 
 
+Paper :  [Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf](ietf_draft/Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf)
+
 EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
 ## INSTALL
