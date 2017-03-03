@@ -65,9 +65,8 @@ EIL is structured as follows:
           +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
        6: |                         AREA-CODE                             |
           |                                                               |
-          |                                                               |
           +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-      12: |                         ISP                                   |
+      10: |                         ISP                                   |
           |                                                               |
           +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 
@@ -80,7 +79,7 @@ by the DNSEXT working group and the IESG.
 
    *  COUNTRY-CODE, 2 octets, upppercase, defined in [](#ISO3166), indicates the country information of the client’s IP. For example, China's COUNTRY-CODE is CN.
 
-   *  AREA-CODE, 6 octets, uppercase, defined in [](#ISO3166) country subdivision code, indicates the area information of the client’s IP. For example, The AREA-CODE of Fujian Province in China is 35.
+   *  AREA-CODE, 4 octets, uppercase, indicates the area information of the client’s IP, using area code of the phone number. AREA-CODE can be found in [](#AREA-CODES). For example, The AREA-CODE of FuZhou City is 0591, the AREA-CODE of QuanZhou City is 0595. AREA-CODE supports fuzzy matching, 059X indicates 0590~0599 covered the whole FuJian Province.
 
    *  ISP, 4 octets, uppercase, indicates the ISP information of the client’s IP, using shortcut names. ISP shortcut names are unique within the context of the COUNTRY-CODE. For example, the shortcut name of China Telecommunications Corporation is TEL, the shortcut name of China United Network Communications is UNI, the shortcut name of China Mobile is MOB, etc.
 
@@ -166,7 +165,7 @@ Other handling considerations are similar with ECS, SECTION 7.3.
 
 ###  Caching the Response
 
-   In the cache, all resource records in the Answer section MUST be tied to the isp location specified in the response. The Answer seciton is valid for all areas which the EIL option covered. For example, an EIL option { "COUNTRY-CODE": "CN", "AREA-CODE": "35", "ISP": "TEL" } covers all 9 Cities in FuJian Province of China Telecommunications ISP.
+   In the cache, all resource records in the Answer section MUST be tied to the isp location specified in the response. The Answer seciton is valid for all areas which the EIL option covered. For example, an EIL option { "COUNTRY-CODE": "CN", "AREA-CODE": "059X", "ISP": "TEL" } covers all 9 Cities in FuJian Province of China Telecommunications ISP.
 
    Same with ECS, The Additional and Authority sections are excluded.
 
@@ -177,7 +176,7 @@ Other handling considerations are similar with ECS, SECTION 7.3.
    Cache lookups are first done as usual for a DNS query, using the query tuple of < name, type, class >. Then, the appropriate RRset MUST be chosen based on the isp location matching.  
 
    IF there was an EIL option, the Intermediate Nameserver will lookup for < same COUNTRY-CODE, same ISP, same AREA-CODE > of the same query tuple in the cache.
-   Otherwise, try to find < same COUNTRY-CODE, same ISP, same AREA-CODE > of the same query tuple in the cache.
+   Otherwise, try to find < same COUNTRY-CODE, same ISP, fuzzy matching AREA-CODE > of the same query tuple in the cache, only fuzzy match 1 digit in tail. For example, find the AREA-CODE 059X fuzzy matching 0590~0599.
 
    If no EIL option was provided, the safest choice of the Intermediate Nameserver is dealing the query as a normal case without EDNS0 option. 
 
@@ -311,7 +310,7 @@ Stub DNS query A resource record of www.example.com .
 
      -> Authoritative Server
 
-Public Forwarding Resolver 223.5.5.5 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "11", "ISP": "UNI" } based on 61.48.7.2.
+Public Forwarding Resolver 223.5.5.5 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "010", "ISP": "UNI" } based on 61.48.7.2.
 
 P-Model will not leak client subnet to Authoritative Server.
 
@@ -327,7 +326,7 @@ P-Model will not leak client subnet to Authoritative Server.
 
      -> Authoritative Server
 
-ISP Recursive Resolver 61.135.23.92 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "11", "ISP": "UNI" } based on 61.135.23.92.
+ISP Recursive Resolver 61.135.23.92 could enable EIL and generate the EIL OPT data { "COUNTRY-CODE": "CN", "AREA-CODE": "010", "ISP": "UNI" } based on 61.135.23.92.
 
 If Authoritative Server doesn't know much about 61.135.23.92, EIL will be helpful.
 
@@ -341,7 +340,7 @@ If Authoritative Server doesn't know much about 61.135.23.92, EIL will be helpfu
 
      -> Authoritative Server
 
-Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is { "COUNTRY-CODE": "CN", "AREA-CODE": "44", "ISP": "TEL" } based on 58.60.109.234.
+Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is { "COUNTRY-CODE": "CN", "AREA-CODE": "0755", "ISP": "TEL" } based on 58.60.109.234.
 
 L-Model can give the most precisely isp location information for dns resolution.
 
