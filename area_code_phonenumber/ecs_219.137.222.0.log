@@ -1,0 +1,25 @@
+
+; <<>> DiG 9.10.3-P4-Debian <<>> @ns-cmn1.qq.com. www.qq.com +subnet=219.137.222.0/24
+; (3 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 21511
+;; flags: qr aa rd ad; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; CLIENT-SUBNET: 219.137.222.0/24/24
+;; QUESTION SECTION:
+;www.qq.com.			IN	A
+
+;; ANSWER SECTION:
+www.qq.com.		300	IN	A	14.17.42.40
+www.qq.com.		300	IN	A	14.17.32.211
+www.qq.com.		300	IN	A	59.37.96.63
+
+;; Query time: 209 msec
+;; SERVER: 183.232.120.59#53(183.232.120.59)
+;; WHEN: Fri Dec 30 15:56:39 HKT 2016
+;; MSG SIZE  rcvd: 98
+

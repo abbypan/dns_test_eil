@@ -23,7 +23,7 @@ sub is_exists_eil {
 sub read_eil_val {
     my ($eil_val, $is_guess) = @_;
 
-    my ( $country_code, $area_code, $isp ) = $eil_val =~ /^(.{2})(.{6})(.{4})/;
+    my ( $country_code, $area_code, $isp ) = $eil_val =~ /^(.{2})(.{4})(.{4})/;
     $country_code =~ s/^\s+|\s+$//g;
     $area_code =~ s/^\s+|\s+$//g;
     $isp =~ s/^\s+|\s+$//g;
@@ -77,7 +77,7 @@ sub gen_eil_val {
     $country_code = uc($country_code);
     $isp    = uc($isp);
 
-    my $eil_val = pack( 'A2A6A4', $country_code, $area_code, $isp );
+    my $eil_val = pack( 'A2A4A4', $country_code, $area_code, $isp );
     return $eil_val;
 }
 

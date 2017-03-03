@@ -1,0 +1,53 @@
+{
+"CN": {
+        "area":{
+            "010":"BeiJing", 
+            "020":"GuangZhou",
+            "021":"ShangHai",
+            "022":"TianJin",
+            "023":"ChongQing",
+            "024":"ShenYang",
+            "025":"NanJing",
+            "027":"WuHan",
+            "028":"ChengDu",
+            "029":"XiAn",
+            "0311":"ShiJiaZhuang",
+            "0351":"TaiYuan",
+            "0371":"ZhengZhou",
+            "0431":"ChangCun",
+            "0451":"HaErBin",
+            "0471":"HuHeHaoTe",
+            "0531":"JiNan",
+            "0551":"HeFei",
+            "0571":"HangZhou",
+            "0591":"FuZhou",
+            "0731":"ChangSha",
+            "0771":"NanNing",
+            "0791":"NanChang", 
+            "0851":"GuiYang",
+            "0871":"KunMing",
+            "0891":"LaSha",
+            "0898":"HaiKou",
+            "0931":"LanZhou",
+            "0951":"YinChuan",
+            "0971":"XiNing",
+            "0991":"WuNuMuQi",
+            "+852":"XiangGang",
+            "+853":"AoMen",
+            "+886":"TaiWan",
+            "":"default"
+        },
+        "isp":{
+            "TEL":"China Telecommunications Corporation",
+            "UNI":"China United Network Communications",
+            "MOB":"China Mobile Communications Corporation",
+            "TIE":"China Tietong Telecommunications Corporation",
+            "EDU":"China Education and Research Network",
+            "":"default"
+        }
+    }, 
+    "" : {
+        "area":{ "":"default" },
+        "isp":{ "":"default" }
+    }
+}

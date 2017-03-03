@@ -1,0 +1,63 @@
+
+;; udp send [127.0.0.1]:5354
+
+;; answer from [127.0.0.1] 87 bytes
+;; HEADER SECTION
+;;	id = 19415
+;;	qr = 1	aa = 0	tc = 0	rd = 0	opcode = QUERY
+;;	ra = 0	z  = 0	ad = 0	cd = 0	rcode  = NOERROR
+;;	qdcount = 1	ancount = 2	nscount = 0	arcount = 1
+;;	do = 0
+;; EDNS version 0
+;;	flags:	0000
+;;	rcode:	NOERROR
+;;	size:	512
+;;	option: 65008	434e313120202020554e4920
+
+;; QUESTION SECTION (1 record)
+;; www.qq.com.	IN	A
+
+;; ANSWER SECTION (2 records)
+www.qq.com.	300	IN	A	125.39.240.113
+www.qq.com.	300	IN	A	61.135.157.156
+
+;; AUTHORITY SECTION (0 records)
+
+;; ADDITIONAL SECTION (1 record)
+;; EDNS version 0
+;;	flags:	0000
+;;	rcode:	NOERROR
+;;	size:	512
+;;	option: 65008	434e313120202020554e4920
+
+
+;; Answer received from 127.0.0.1 (87 bytes)
+;; HEADER SECTION
+;;	id = 19415
+;;	qr = 1	aa = 0	tc = 0	rd = 0	opcode = QUERY
+;;	ra = 0	z  = 0	ad = 0	cd = 0	rcode  = NOERROR
+;;	qdcount = 1	ancount = 2	nscount = 0	arcount = 1
+;;	do = 0
+;; EDNS version 0
+;;	flags:	0000
+;;	rcode:	NOERROR
+;;	size:	512
+;;	option: 65008	434e313120202020554e4920
+
+;; QUESTION SECTION (1 record)
+;; www.qq.com.	IN	A
+
+;; ANSWER SECTION (2 records)
+www.qq.com.	300	IN	A	125.39.240.113
+www.qq.com.	300	IN	A	61.135.157.156
+
+;; AUTHORITY SECTION (0 records)
+
+;; ADDITIONAL SECTION (1 record)
+;; EDNS version 0
+;;	flags:	0000
+;;	rcode:	NOERROR
+;;	size:	512
+;;	option: 65008	434e313120202020554e4920
+
+
