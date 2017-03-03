@@ -6,6 +6,8 @@ EIL draft: [ISP Location in DNS Queries](ietf_draft/draft.txt)
 
 Paper :  [Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf](ietf_draft/Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf)
 
+Slide :  [EIL: Dealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
+
 EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
 AREA-CODE : use phone number, 4 octets
