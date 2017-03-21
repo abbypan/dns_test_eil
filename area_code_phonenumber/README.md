@@ -20,7 +20,7 @@ EIL draft (area-code: phone number): [ISP Location in DNS Queries](../ietf_draft
 
 ## FILES
 
-    eil_loc.json :  country_code, area_code, isp
+    eil_whitelist.json :  country_code, area_code, isp
 
     eil_zone_www.qq.com.csv : take www.qq.com for test, A RRDATA for eil
 

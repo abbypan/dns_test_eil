@@ -9,7 +9,7 @@ use Data::Dumper;
 
 our $DOM = 'www.qq.com';
 our $EIL_CODE = 0xFDF0;
-my $whitelist= slurp('eil_loc.json');
+my $whitelist= slurp('eil_whitelist.json');
 our $EIL_W = decode_json( $whitelist );    #whitelist
 
 sub is_exists_eil {
