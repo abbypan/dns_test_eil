@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd' [
+<!ENTITY pandocMiddle PUBLIC '' 'middle.xml'>
+
+<!ENTITY pandocRefnorm PUBLIC '' 'ref.norm.xml'>
+<!ENTITY pandocRefinfo PUBLIC '' 'ref.info.xml'>
+]>
+
+<rfc category="info" docName="draft-pan-dnsop-edns-isp-location">
+ <front>
+        <title abbrev="ISP Location in DNS Queries">ISP Location in DNS Queries</title>
+
+        <author initials="L." surname="Pan" fullname="Lanlan Pan">
+            <address>
+                <postal>
+                    <street></street>
+                    <city>Beijing</city>
+                    <region></region>
+                    <code></code>
+                    <country>CN</country>
+                </postal>
+                <phone></phone>
+                <email>abbypan@gmail.com</email>
+                <uri>https://github.com/abbypan</uri>
+            </address>
+        </author>
+
+        <author initials="Y." surname="Fu" fullname="Yu Fu">
+            <organization>CNNIC</organization>
+            <address>
+                <postal>
+                    <street>No.4 South 4th Street, Zhongguancun</street>
+                    <street></street>
+                    <city>Beijing</city>
+                    <region></region>
+                    <code></code>
+                    <country>CN</country>
+                </postal>
+                <phone></phone>
+                <email>fuyu@cnnic.cn</email>
+            </address>
+        </author>
+
+        <date month="April" year="2017"/>
+
+        <area>General</area>
+        <workgroup>dnsop</workgroup>
+        <keyword>dns</keyword>
+        <keyword>ip</keyword>
+        <keyword>EIL</keyword>
+        <keyword>ECS</keyword>
+        <keyword>location</keyword>
+        <abstract>
+            <t>This document describes an Extension Mechanisms for DNS (EDNS0) option that is in active use to carry information about the network that originated a DNS query and the network for which the subsequent response can be cached.</t>
+            <t>It is inspired by EDNS Client Subnet (ECS) with some privacy considerations, goals to reduce the "guess geolocation of client's IP" work on Authoritative Nameservers.</t>
+        </abstract>
+</front>
+
+<middle>
+&pandocMiddle;
+</middle>
+
+<back>
+     <references title="Normative References">
+                 &pandocRefnorm;
+             </references>
+     <references title="Informative References">
+                 &pandocRefinfo;
+             </references>
+</back>
+
+</rfc>

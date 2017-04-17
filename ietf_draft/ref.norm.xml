@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<reference anchor='RFC1034'>
+    <front>
+        <title>Domain Names - Concepts and Facilities</title>
+        <author initials='P.' surname='Mockapetris' fullname=''>
+            <organization /></author>
+        <date year='1987' month='November' />
+    </front>
+    <seriesInfo name='RFC' value='1034' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc1034.txt' />
+</reference>
+
+<reference anchor='RFC1035'>
+    <front>
+        <title>Domain Names - Implementation and Specification</title>
+        <author initials='P.' surname='Mockapetris' fullname=''>
+            <organization /></author>
+        <date year='1987' month='November' />
+    </front>
+    <seriesInfo name='RFC' value='1035' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc1035.txt' />
+</reference>
+
+<reference anchor='RFC1700'>
+    <front>
+        <title>Assigned Numbers</title>
+        <author initials='J.' surname='Reynolds' fullname=''><organization /></author>
+        <author initials='J.' surname='Postel' fullname=''><organization /></author>
+        <date year='1994' month='October' />
+    </front>
+    <seriesInfo name='RFC' value='1700' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc1700.txt' />
+</reference>
+
+<reference anchor='RFC2119'>
+    <front>
+        <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+        <author initials='S.' surname='Bradner' fullname=''><organization /></author>
+        <date year='1997' month='March' />
+    </front>
+    <seriesInfo name='RFC' value='2119' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc2119.txt' />
+</reference>
+
+<reference anchor='RFC2182'>
+    <front>
+        <title>Selection and Operation of Secondary DNS Servers</title>
+        <author initials='R.' surname='ELZ' fullname=''><organization /></author>
+        <author initials='R.' surname='Bush' fullname=''><organization /></author>
+        <author initials='S.' surname='Bradner' fullname=''><organization /></author>
+        <author initials='M.' surname='Patton' fullname=''><organization /></author>
+        <date year='1997' month='July' />
+    </front>
+    <seriesInfo name='RFC' value='2182' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc2182.txt' />
+</reference>
+
+<reference anchor='RFC6891'>
+    <front>
+        <title>Extension Mechanisms for DNS (EDNS(0))</title>
+        <author initials='J.' surname='Damas' fullname=''><organization /></author>
+        <author initials='M.' surname='Graff' fullname=''><organization /></author>
+        <author initials='P.' surname='Vixie' fullname=''><organization /></author>
+        <date year='2013' month='April' />
+    </front>
+    <seriesInfo name='RFC' value='6891' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc6891.txt' />
+</reference>
+
+<reference anchor='RFC7719'>
+    <front>
+        <title>DNS Terminology</title>
+        <author initials='P.' surname='Hoffman' fullname=''><organization /></author>
+        <author initials='A.' surname='Sullivan' fullname=''><organization /></author>
+        <author initials='K.' surname='Fujiwara' fullname=''><organization /></author>
+        <date year='2015' month='December' />
+    </front>
+    <seriesInfo name='RFC' value='7719' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc7719.txt' />
+</reference>
+
+<reference anchor='RFC7871'>
+    <front>
+        <title>Client Subnet in DNS Queries</title>
+        <author initials='C.' surname='Contavalli' fullname=''><organization /></author>
+        <author initials='W.' surname='van der Gasst' fullname=''><organization /></author>
+        <author initials='D.' surname='Lawrence' fullname=''><organization /></author>
+        <author initials='W.' surname='Kumari' fullname=''><organization /></author>
+        <date year='2016' month='May' />
+    </front>
+    <seriesInfo name='RFC' value='7871' />
+    <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc7871.txt' />
+</reference>
