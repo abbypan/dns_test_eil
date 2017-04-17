@@ -13,7 +13,7 @@ However, ECS raises some privacy concerns because it leaks client subnet informa
 
 Meanwhile, many Authoritative Nameservers support GeoIP Feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. They guess the user's geolocation by the client subnet of ECS or by the source IP address of dns query, return tailor dns response based on the user's geolocation. To sum up, these Authoritative Nameservers use ECS client subnet information for GeoIP Feature's user geolocation detecting.
 
-This document is an improved solution for ECS-enabled GeoIP Feature of Authoritative Nameserver, describes an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, find the right balance between privacy improvement and user experience optimization. EIL is defined to convey < country, province, isp > information that is relevant to the DNS message. It will directly provide the same sufficient geolocation information for the GeoIP-based Authoritative Nameserver that enabling ECS, to decide the response without guessing geolocation of the IP address.
+This document is an improved solution for ECS-enabled GeoIP Feature of Authoritative Nameserver, describes an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, find the right balance between privacy improvement and user experience optimization. EIL is defined to convey < country, area, isp > information that is relevant to the DNS message. It will directly provide the same sufficient geolocation information for the GeoIP-based Authoritative Nameserver that enabling ECS, to decide the response without guessing geolocation of the IP address.
 
 EIL is intended for those Local Forwarding Resolvers, Recursive Resolvers and Authoritative Nameservers that would benefit from the extension and not for general purpose deployment like ECS scenario. It could be applied for tailor dns response. EIL can safely be ignored by servers that choose not to implement or enable it.
 
@@ -23,15 +23,15 @@ Separate the consideration of path calculation (Data Provider) and tailored dns 
 
 Data Providers make path calculations to optimize content delivery on the Internet based on the network topology, considering many factors such as IP, RIPs, FIBs, AS Path hops, system load, content availability, path latency, etc. Note that, Data Providers have the full details of the clients, they can make any complex path calculations without ECS and EIL.
 
-Authoritative Nameservers configure tailored dns response based on the result of path calculations, allocate IP addresses to different datacenters. Usually, users from the same < country, province, isp > geolocation are allocated to the same datacenter, the same best "network topologically close" datacenter. For example, client ip addresses from < China, Beijing, Telecom > are allocated to DataCenter-1, client ip addresses from < China, Beijing, Unicom > are allocated to DataCenter-2, etc. Above is the GeoIP-based Tailored DNS Response.
+Authoritative Nameservers configure tailored dns response based on the result of path calculations, allocate IP addresses to different datacenters. Usually, users from the same < country, area, isp > geolocation are allocated to the same datacenter, the same best "network topologically close" datacenter. For example, client ip addresses from < China, Beijing, Telecom > are allocated to DataCenter-1, client ip addresses from < China, Beijing, Unicom > are allocated to DataCenter-2, etc. Above is the GeoIP-based Tailored DNS Response.
 
-Therefore, if the GeoIP-based Authoritative Nameservers enable ECS, they can use the client subnet information of ECS instead of resolver's address for GeoIP detecting. Moreover, the GeoIP-based Authoritative Nameservers can directly use the < country, province, isp > geolocation information of EIL without GeoIP detecting.
+Therefore, if the GeoIP-based Authoritative Nameservers enable ECS, they can use the client subnet information of ECS instead of resolver's address for GeoIP detecting. Moreover, the GeoIP-based Authoritative Nameservers can directly use the < country, area, isp > geolocation information of EIL without GeoIP detecting.
 
 Again, we emphasize that tailored dns response does not affect path calculation. Data Providers can make path calculations based on network topology, decide network topological close datacenter for each ip address. Authoritative Nameservers allocate tailored dns response to each ip address based on the "network topological close" result of path calculations. 
 
-EIL is satisfied if Authoritative Nameservers aggregate the ip addresses from the same < country, province, isp > geolocation to visit the same datacenters, we call that GeoIP-based tailored dns responses, and these tailored responses have "network topological close" distance to the users.
+EIL is satisfied if Authoritative Nameservers aggregate the ip addresses from the same < country, area, isp > geolocation to visit the same datacenters, we call that GeoIP-based tailored dns responses, and these tailored responses have "network topological close" distance to the users.
 
-ECS is satisfied if Authoritative Nameservers make tailored dns response down to subnet pricise level. For example, subnet-1 ... subnet-100 in the same < country, province, isp > geolocation, Data Provier applies subnet-1 ... subnet-50 visit DataCenter-1, subnet-51 .. subnet-100 visit DataCenter-2.
+ECS is satisfied if Authoritative Nameservers make tailored dns response down to subnet pricise level. For example, (subnet-1, ..., subnet-100) are from the same < country, area, isp > geolocation, Data Provier applies (subnet-1, ..., subnet-50) visit DataCenter-1, (subnet-51, ..., subnet-100) visit DataCenter-2.
 
 # Requirements Language
 
@@ -274,6 +274,8 @@ This document defines EIL, need request IANA to assign a new EDNS0 option code t
 # Acknowledgements
 
 EIL is inspired by ECS, the authors especially thanks to C. Contavalli, W. van der Gaast, D. Lawrence, and W. Kumari.
+
+Thanks comments for Barry Raveendran Greene, Paul Vixie, Petr Špaček, Brian Hartvigsen, Ask Bjørn Hansen.
 
 Thanks a lot to all in the DNSOP, DNSPRIV and DNSEXT mailing list.
 
