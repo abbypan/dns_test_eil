@@ -11,10 +11,8 @@ Paper :  [Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf](ietf_draft/Pape
 Slide :  [EIL: Dealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
 
 Draft (area-code : country subdivision code)
-- URL:            https://www.ietf.org/internet-drafts/draft-pan-dnsop-edns-isp-location-00.txt
+- Newest draft: [ietf_draft/draft.txt](ietf_draft/draft.txt)
 - Status:         https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
-- Htmlized:       https://tools.ietf.org/html/draft-pan-dnsop-edns-isp-location-00
-
 
 ## INSTALL
  
