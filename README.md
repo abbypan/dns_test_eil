@@ -6,13 +6,13 @@ EDNS option code should be assigned by the expert review process as defined by t
 
 AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
 
-Paper :  [Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf](ietf_draft/Paper_EIL_Dealing_with_the_Privacy_Problem_of_ECS.pdf)
-
-Slide :  [EIL: Dealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
-
 Draft (area-code : country subdivision code)
-- Newest draft: [ietf_draft/draft.txt](ietf_draft/draft.txt)
-- Status:         https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
+- Newest draft: [draft.txt](ietf_draft/draft.txt)
+- Status:       https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
+
+[Paper: EIL_Dealing_with_the_Privacy_Problem_of_ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPaG9nZ045VXRrZzg)
+
+[Slide: EILDealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
 
 ## INSTALL
  
