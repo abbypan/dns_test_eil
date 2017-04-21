@@ -37,12 +37,12 @@ Draft (area-code : country subdivision code)
 authority:
 
     $ cd dns_test_eil 
-    $ perl recv_eil_aut.pl
+    $ sudo perl recv_eil_aut.pl
 
 recursive:
 
     $ cd dns_test_eil
-    $ perl recv_eil_rec.pl
+    $ sudo perl recv_eil_rec.pl
 
 client:
 
@@ -55,3 +55,7 @@ client:
     # receive same RR : ECS(219.137.222.0/24) => EIL(CN, 44, TEL), indicates (CHINA, GUANGDONG, TELECOM)
     $ dig @ns-cmn1.qq.com. www.qq.com  +subnet=219.137.222.0/24 > ecs_219.137.222.0.log
     $ perl send_eil.pl www.qq.com CN 44 TEL > eil_cn_44_tel.log
+   
+    $ receive same RR : ECS(166.171.186.0/24) => EIL(US, NY, ATT), indicates (United States, New York, AT&T)
+    $ dig @ns-cmn1.qq.com www.qq.com +subnet=166.171.186.0/24 > ecs_166.171.186.0.log
+    $ perl send_eil.pl www.qq.com US NY ATT > eil_us_ny_att.log

@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.11.0-P3 <<>> @ns-cmn1.qq.com www.qq.com +subnet=166.171.186.0/24
+; (3 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52562
+;; flags: qr aa rd ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;www.qq.com.			IN	A
+
+;; ANSWER SECTION:
+www.qq.com.		300	IN	CNAME	qq.com.edgesuite.net.
+
+;; Query time: 52 msec
+;; SERVER: 182.254.111.100#53(182.254.111.100)
+;; WHEN: 五 4月 21 15:56:25 CST 2017
+;; MSG SIZE  rcvd: 62
+

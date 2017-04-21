@@ -1,7 +1,7 @@
 use Net::DNS::Nameserver;
 use Net::DNS::Resolver;
 use Net::DNS;
-use POSIX;
+use POSIX qw/strftime/;
 use Encode;
 use JSON;
 use File::Slurp qw/slurp/;
@@ -41,9 +41,8 @@ sub strict_eil {
     my ( $c, $a, $i ) = @{$eil}{ 'country_code', 'area_code', 'isp' };
 
     return unless ( exists $EIL_W->{$c} );
-    return unless ( exists $EIL_W->{$c}{area}{$a} );
-    return unless ( exists $EIL_W->{$c}{isp}{$i} );
-
+    return if ( $a ne '*' and $a ne '' and ! exists $EIL_W->{$c}{area}{$a} );
+    return if ( $i ne '*' and $i ne '' and ! exists $EIL_W->{$c}{isp}{$i} );
     return $eil;
 }
 

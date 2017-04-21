@@ -22,8 +22,8 @@ sub read_eil_zone {
         $d=~s/\s+$//;
         my @r = split /,/i,  $d;
         $_ ||='' for @r;
-        #@r : COUNTRY_CODE,AREA_CODE,ISP,QTYPE,QCLASS,TTL,RDATA
-        push @{$eil_z->{$dom}{$r[3]}{$r[0]}{$r[1]}{$r[2]}}, "$dom $r[5] $r[4] $r[3] $r[6]";
+        #@r : COUNTRY_CODE,AREA_CODE,ISP,QTYPE,QCLASS,TTL,RDATA,RTYPE
+        push @{$eil_z->{$dom}{$r[3]}{$r[0]}{$r[1]}{$r[2]}}, "$dom $r[5] $r[4] $r[7] $r[6]";
     }
     close $fh;
     return $eil_z;
@@ -40,13 +40,31 @@ sub reply_handler {
             my $e = read_eil_val($eil_val);
             if($e){
                 my ($c, $a, $i)= @{$e}{qw/country_code area_code isp/};
-                $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{$a}{$i}
-                        || $EIL_Z{$DOM}{$qtype}{$c}{''}{$i}
-                        || $EIL_Z{$DOM}{$qtype}{$c}{''}{''}
-                        || $EIL_Z{$DOM}{$qtype}{''}{''}{''};
+
+                # '*' indicates the all-same response in the specified location, mutual exclusion
+                # ''  indicates default response in the specified location
+                # For example, < 'JP', '*', '*' > means all clients from JAPAN in the same configuration, highest priority; < 'JP', '', '' > means default configuration for clients from JAPAN, lowest priority.
+                if(exists  $EIL_Z{$DOM}{$qtype}{$c}{$a}{$i}){
+                    $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{$a}{$i};
+                }elsif(exists $EIL_Z{$DOM}{$qtype}{$c}{'*'}{$i}){
+                    $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{'*'}{$i};
+                    $a = '*';
+                }elsif(exists $EIL_Z{$DOM}{$qtype}{$c}{$a}{'*'}){
+                    $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{$a}{'*'};
+                    $i = '*';
+                }elsif(exists $EIL_Z{$DOM}{$qtype}{$c}{'*'}{'*'}){
+                    $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{'*'}{'*'};
+                    $a = '*';
+                    $i = '*';
+                }else {
+                    $rr_arr = $EIL_Z{$DOM}{$qtype}{$c}{''}{$i}
+                    || $EIL_Z{$DOM}{$qtype}{$c}{$a}{''}
+                    || $EIL_Z{$DOM}{$qtype}{$c}{''}{''}
+                    || $EIL_Z{$DOM}{$qtype}{''}{''}{''};
+                }
 
                 my $res_eil = gen_eil_opt($c, $a, $i);
-                print "\n*** authority find $DOM, $c, $a, $i, $rr_arr->[0]\n";
+                print "\n", strftime("%Y-%m-%d %H:%M:%S", localtime), "  *** authority find $DOM, $c, $a, $i, $rr_arr->[0]\n";
                 push @add, $res_eil;
                 $rcode = "NOERROR";
             }else{
