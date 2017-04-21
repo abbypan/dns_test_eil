@@ -51,8 +51,8 @@
         <keyword>ECS</keyword>
         <keyword>location</keyword>
         <abstract>
-            <t>This document describes an Extension Mechanisms for DNS (EDNS0) option that is in active use to carry information about the network that originated a DNS query and the network for which the subsequent response can be cached.</t>
-            <t>It is inspired by EDNS Client Subnet (ECS) with some privacy considerations, goals to reduce the "guess geolocation of client's IP" work on Authoritative Nameservers.</t>
+            <t>This document describes an Extension Mechanisms for DNS (EDNS0) option that is in active use to carry &lt; COUNTRY, AREA, ISP &gt; isp location information about the network that originated a DNS query and the network for which the subsequent response can be cached.</t>
+            <t>It is inspired by EDNS Client Subnet (ECS) with some privacy considerations, goals to reduce the "guess location of client's IP" work on Authoritative Nameservers.</t>
         </abstract>
 </front>
 
