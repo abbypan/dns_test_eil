@@ -6,7 +6,17 @@
 <!ENTITY pandocRefinfo PUBLIC '' 'ref.info.xml'>
 ]>
 
-<rfc category="info" docName="draft-pan-dnsop-edns-isp-location">
+<rfc category="info" docName="draft-pan-dnsop-edns-isp-location-01"  ipr="trust200902">
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes" ?>
+<?rfc subcompact="no" ?>
+<?rfc compact="yes" ?>
+<?rfc comments="yes" ?>
+
  <front>
         <title abbrev="ISP Location in DNS Queries">ISP Location in DNS Queries</title>
 
@@ -41,15 +51,17 @@
             </address>
         </author>
 
-        <date month="April" year="2017"/>
+        <date month="May" year="2017"/>
 
-        <area>General</area>
+        <area>ops</area>
         <workgroup>dnsop</workgroup>
+
         <keyword>dns</keyword>
         <keyword>ip</keyword>
         <keyword>EIL</keyword>
         <keyword>ECS</keyword>
         <keyword>location</keyword>
+
         <abstract>
             <t>This document describes an Extension Mechanisms for DNS (EDNS0) option that is in active use to carry &lt; COUNTRY, AREA, ISP &gt; isp location information about the network that originated a DNS query and the network for which the subsequent response can be cached.</t>
             <t>It is inspired by EDNS Client Subnet (ECS) with some privacy considerations, goals to reduce the "guess location of client's IP" work on Authoritative Nameservers.</t>

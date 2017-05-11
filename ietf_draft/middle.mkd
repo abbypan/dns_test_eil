@@ -1,17 +1,10 @@
 # Introduction
 
-<?rfc toc="yes"?>
-<?rfc symrefs="yes"?>
-<?rfc sortrefs="yes"?>
-<?rfc subcompact="no"?>
-<?rfc compact="yes"?>
-<?rfc comments="yes"?>
-
 As described in [EDNS Client Subnet (ECS)](#RFC7871), many Authoritative Nameservers today return different responses based on the perceived topological location of the user. These servers use the IP address of the incoming query to identify that location. ECS is an [EDNS0](#RFC6891) option to carry client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
 
 However, ECS raises some privacy concerns because it leaks client subnet information on the resolution path to the Authoritative Nameserver.
 
-Meanwhile, many Authoritative Nameservers support GeoIP feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. They guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation. To sum up, these Authoritative Nameservers use ECS client subnet information for GeoIP feature's user geolocation detecting.
+Meanwhile, many Authoritative Nameservers support GeoIP feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation. To sum up, these Authoritative Nameservers use ECS client subnet information for GeoIP feature's user geolocation detecting.
 
 This document is an improved solution for ECS-enabled GeoIP feature of Authoritative Nameserver, describes an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, find the right balance between privacy improvement and user experience optimization. EIL is defined to convey isp location < COUNTRY, AREA, ISP > information that is relevant to the DNS message. It will directly provide the same sufficient information for the GeoIP-based Authoritative Nameserver that enabling ECS, to decide the response without guessing geolocation of the IP address.
 
