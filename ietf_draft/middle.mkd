@@ -52,11 +52,11 @@ Authoritative Nameserver: described in [](#RFC7719) and [](#RFC2182). It is a se
 
 # Overview
 
-EIL is an EDNS0 option to allow Local Forwarding Resolvers and Recursive Resolvers, if they are willing, to forward details about the isp location of client when talking to other nameservers. EIL can be added in queries sent by Local Forwarding Resolvers or Recursive Resolvers in a way that is transparent to Stub Resolvers and end users. 
+EIL is an EDNS0 option to allow Local Forwarding Resolvers and Recursive Resolvers, if they are willing, to forward details about the isp location of client when talking to other nameservers. EIL can be added in queries sent by Local Forwarding Resolvers or Recursive Resolvers in a way that is transparent to Stub Resolvers and end users.
 
 Like ECS, Authoritative Nameservers could provide a better answer by using precise isp location in EIL. Intermediate Nameservers could send EIL query and cache the EIL response. This document also provides a mechanism to signal Intermediate Nameservers that they do not want EIL treatment for specific queries.
 
-EIL is only defined for the Internet (IN) DNS class. 
+EIL is only defined for the Internet (IN) DNS class.
 
 The format of EIL option is described in Section 5.
 
