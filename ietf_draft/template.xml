@@ -6,7 +6,7 @@
 <!ENTITY pandocRefinfo PUBLIC '' 'ref.info.xml'>
 ]>
 
-<rfc category="info" docName="draft-pan-dnsop-edns-isp-location-01"  ipr="trust200902">
+<rfc category="info" docName="draft-pan-dnsop-edns-isp-location-02"  ipr="trust200902">
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -27,7 +27,7 @@
                     <city>Beijing</city>
                     <region></region>
                     <code></code>
-                    <country>CN</country>
+                    <country>China</country>
                 </postal>
                 <phone></phone>
                 <email>abbypan@gmail.com</email>
@@ -44,7 +44,7 @@
                     <city>Beijing</city>
                     <region></region>
                     <code></code>
-                    <country>CN</country>
+                    <country>China</country>
                 </postal>
                 <phone></phone>
                 <email>fuyu@cnnic.cn</email>
@@ -63,8 +63,9 @@
         <keyword>location</keyword>
 
         <abstract>
-            <t>This document describes an Extension Mechanisms for DNS (EDNS0) option that is in active use to carry &lt; COUNTRY, AREA, ISP &gt; isp location information about the network that originated a DNS query and the network for which the subsequent response can be cached.</t>
-            <t>It is inspired by EDNS Client Subnet (ECS) with some privacy considerations, goals to reduce the "guess location of client's IP" work on Authoritative Nameservers.</t>
+            <t>Nowadays, many Authoritative Nameservers support GeoIP feature, they guess the user's geolocation by the client subnet of EDNS Client Subnet (ECS) or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation. However, ECS raises some privacy concerns because it leaks client subnet information on the resolution path to the Authoritative Nameserver.</t>
+            <t>This document is inspired by EDNS Client Subnet (ECS), describes an improved solution for GeoIP-enabled Authoritative Nameservers, defines an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, tries to find the right balance between privacy improvement and user experience optimization.</t>
+            <t>EIL is defined to convey isp location &lt; COUNTRY, AREA, ISP &gt; information that is relevant to the DNS message. It will directly provide the same sufficient information for the GeoIP-enabled Authoritative Nameserver as ECS, to decide the response without guessing geolocation of the IP address.</t>
         </abstract>
 </front>
 

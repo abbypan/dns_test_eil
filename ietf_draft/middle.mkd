@@ -1,14 +1,16 @@
 # Introduction
 
-As described in [EDNS Client Subnet (ECS)](#RFC7871), many Authoritative Nameservers today return different responses based on the perceived topological location of the user. These servers use the IP address of the incoming query to identify that location. ECS is an [EDNS0](#RFC6891) option to carry client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
+Nowadays, many Authoritative Nameservers support GeoIP feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
 
-However, ECS raises some privacy concerns because it leaks client subnet information on the resolution path to the Authoritative Nameserver.
+ECS is an [EDNS0](#RFC6891) option, described in [](#RFC7871), carries client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
 
-Meanwhile, many Authoritative Nameservers support GeoIP feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation. To sum up, these Authoritative Nameservers use ECS client subnet information for GeoIP feature's user geolocation detecting.
+GeoIP-enabled Authoritative Nameservers use ECS for user geolocation detecting. However, ECS raises some privacy concerns because it leaks client subnet information on the resolution path to the Authoritative Nameserver.
 
-This document is an improved solution for ECS-enabled GeoIP feature of Authoritative Nameserver, describes an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, find the right balance between privacy improvement and user experience optimization. EIL is defined to convey isp location < COUNTRY, AREA, ISP > information that is relevant to the DNS message. It will directly provide the same sufficient information for the GeoIP-based Authoritative Nameserver that enabling ECS, to decide the response without guessing geolocation of the IP address.
+This document describes an improved solution for GeoIP-enabled Authoritative Nameserver, defines an EDNS ISP Location (EIL) extension to address the privacy problem of ECS, tries to find the right balance between privacy improvement and user experience optimization.
 
-EIL is intended for those Local Forwarding Resolvers, Recursive Resolvers and Authoritative Nameservers that would benefit from the extension and not for general purpose deployment like ECS scenario. It could be applied for tailor DNS response. EIL can safely be ignored by servers that choose not to implement or enable it.
+EIL is defined to convey isp location < COUNTRY, AREA, ISP > information that is relevant to the DNS message. It will directly provide the same sufficient information for the GeoIP-enabled Authoritative Nameserver as ECS, to decide the response without guessing geolocation of the IP address.
+
+EIL is intended for those Local Forwarding Resolvers, Recursive Resolvers and Authoritative Nameservers that would benefit from the extension and not for general purpose deployment. It could be applied for tailor DNS response like ECS scenario. EIL can safely be ignored by servers that choose not to implement or enable it.
 
 ## Path Calculation and Tailored DNS Response
 
@@ -18,11 +20,11 @@ Data Providers make path calculations to optimize content delivery on the Intern
 
 Authoritative Nameservers configure tailored DNS response based on the result of path calculations, allocate IP addresses to different datacenters. Usually, users from the same < COUNTRY, AREA, ISP > isp location are allocated to the same datacenter, the same best "network topologically close" datacenter. For example, client IP addresses from < China, Beijing, Telecom > are allocated to DataCenter-1, client IP addresses from < China, Beijing, Unicom > are allocated to DataCenter-2, etc. Above is the GeoIP-based Tailored DNS Response.
 
-Therefore, if the GeoIP-based Authoritative Nameservers enable ECS, they can use the client subnet information of ECS instead of resolver's address for GeoIP detecting. Moreover, the GeoIP-based Authoritative Nameservers can directly use the < COUNTRY, AREA, ISP > information of EIL without GeoIP detecting.
+Therefore, if the GeoIP-enabled Authoritative Nameservers support ECS, they can use the client subnet information of ECS instead of resolver's address for geolocation detecting. Alternative, the GeoIP-enabled Authoritative Nameservers can directly use the < COUNTRY, AREA, ISP > information of EIL without geolocation detecting.
 
 Again, we emphasize that tailored DNS response does not affect path calculation. Data Providers can make path calculations based on network topology, decide network topological close datacenter for each IP address. Authoritative Nameservers allocate tailored DNS response to each IP address based on the "network topological close" result of path calculations. EIL tell Authoritative Nameserver like that, "I want to know what is best IP address for clients from < China, Beijing, Telecom > at network topology path calculations result", but not "I want to know what is the nearest IP address for clients from < China, Beijing, Telecom > at physical topology path calculations result".
 
-EIL is satisfied if Authoritative Nameservers aggregate the IP addresses from the same < COUNTRY, AREA, ISP > isp location to visit the same datacenters, we call that GeoIP-based tailored DNS responses, and these tailored responses have "network topological close" distance to the users.
+EIL is satisfied if Authoritative Nameservers aggregate the IP addresses from the same < COUNTRY, AREA, ISP > isp location to visit the same datacenters, we call that GeoIP-based tailored DNS responses, and these tailored responses have the best "network topological close" distance to the users which are generated from network topology path calculations result.
 
 ECS is satisfied if Authoritative Nameservers make tailored DNS response down to subnet precise level. For example, (subnet-1, ..., subnet-100) are from the same < COUNTRY, AREA, ISP > isp location, Data Provider applies (subnet-1, ..., subnet-50) visit DataCenter-1, (subnet-51, ..., subnet-100) visit DataCenter-2.
 
@@ -50,11 +52,13 @@ Authoritative Nameserver: described in [](#RFC7719) and [](#RFC2182). It is a se
 
 # Overview
 
-This document provides an EDNS0 option to allow Local Forwarding Resolvers and Recursive Resolvers, if they are willing, to forward details about the isp location of client when talking to other nameservers.
-
-The format of EIL option is described in Section 5. EIL can be added in queries sent by Local Forwarding Resolvers or Recursive Resolvers in a way that is transparent to Stub Resolvers and end users. EIL is only defined for the Internet (IN) DNS class.
+EIL is an EDNS0 option to allow Local Forwarding Resolvers and Recursive Resolvers, if they are willing, to forward details about the isp location of client when talking to other nameservers. EIL can be added in queries sent by Local Forwarding Resolvers or Recursive Resolvers in a way that is transparent to Stub Resolvers and end users. 
 
 Like ECS, Authoritative Nameservers could provide a better answer by using precise isp location in EIL. Intermediate Nameservers could send EIL query and cache the EIL response. This document also provides a mechanism to signal Intermediate Nameservers that they do not want EIL treatment for specific queries.
+
+EIL is only defined for the Internet (IN) DNS class. 
+
+The format of EIL option is described in Section 5.
 
 The security concerns for EIL are like ECS, such as cache growth, spoof EDNS0 option and privacy, etc. Mitigation techniques are discussed in Section 6.
 
@@ -98,7 +102,7 @@ The aim to use short names in the fields is to limit the data size of EIL, decre
 
 The null value 0x20 signifies that the field is unknown. If all fields in EIL are set to null value, it means that client doesn't want to use EIL.
 
-Authoritative Nameservers can send EIL response with the * value 0x2A in AREA-CODE field or ISP field (not COUNTRY-CODE field), which signifies that the field is wildcard match. For example,  < CN, *, TEL > indicates: all area in China, Telecom ISP.
+Authoritative Nameservers can send EIL response with the * value 0x2A in AREA-CODE field or ISP field (not COUNTRY-CODE field), which signifies that the field is wildcard match. For example,  < CN, *, TEL > indicates "all area in China, Telecom ISP".
 
 Example code is in Github at: https://github.com/abbypan/dns_test_eil .
 
@@ -139,7 +143,7 @@ If a Local Forwarding Resolver had sent a query with EIL, and receives a REFUSE 
 
 ### Whitelist
 
-EIL contains a whitelist for COUNTRY-CODE, AREA-CODE and ISP, which can be discussed or maintained by the DNSOP working group. Authoritative Nameservers that supporting EIL must only response the EIL queries matched the whitelist. Recursive Resolver that supporting EIL must only cache the EIL responses matched the whitelist.
+EIL contains a whitelist for COUNTRY-CODE, AREA-CODE and ISP, which can be discussed and maintained by the DNSOP working group. Authoritative Nameservers that supporting EIL must only response the EIL queries matched the whitelist. Recursive Resolver that supporting EIL must only cache the EIL responses matched the whitelist.
 
 ### Authoritative Nameserver
 
@@ -235,7 +239,7 @@ Name servers should only enable EIL where it is expected to benefit the end user
 
 ## Response Accuracy
 
-Authoritative Nameservers that support ECS-enabled GeoIP feature can support EIL smoothly.
+GeoIP-enabled Authoritative Nameservers that support ECS can support EIL smoothly.
 
 Compared to ECS, EIL can reduce dependence on the IP geolocation database quality. EIL will rise the response accuracy of Authoritative Nameserver if its database can not find approximate isp location of ECS client subnet, ensure user latency. EIL will help Authoritative Nameservers to avoid cross-isp visit if its database can not find approximate isp location of ECS client subnet, save IP transit cost.
 
