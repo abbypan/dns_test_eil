@@ -393,5 +393,3 @@ If Authoritative Nameserver doesn't know much about 61.135.23.92, EIL will be he
 Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is < CN, 44, TEL > based on 58.60.109.234.
 
 L-Model can give the most precisely isp location information for DNS resolution.
-
-
