@@ -48,6 +48,18 @@
     <format type='' target='' />
 </reference>
 
+<reference anchor='DYN-Traffic-Director-Geographic-Groups' target='https://help.dyn.com/traffic-director-predefined-geographic-regions/'>
+    <front>
+        <title abbrev='DYN-Traffic-Director-Geographic-Groups'>Predefined Geographic Groups of Traffic Director</title>
+        <author initials='' surname='' fullname=''>
+            <organization>DYN</organization>
+            <address>
+                <email></email></address></author>
+        <date year='' month='' />
+    </front>
+    <format type='' target='' />
+</reference>
+
 <reference anchor='gdnsd-GeoIP' target='https://github.com/gdnsd/gdnsd/wiki/GdnsdPluginGeoip'>
     <front>
         <title abbrev='gdnsd-GeoIP'>GdnsdPluginGeoip</title>

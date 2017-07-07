@@ -1,6 +1,6 @@
 # Introduction
 
-Nowadays, many Authoritative Nameservers support GeoIP feature, for example, [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP), etc. These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
+Nowadays, many Authoritative Nameservers support GeoIP feature, such as [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP) (More details are given in Appendix A). These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
 
 ECS is an [EDNS0](#RFC6891) option, described in [](#RFC7871), carries client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
 
@@ -111,6 +111,8 @@ Example code is in Github at: https://github.com/abbypan/dns_test_eil .
 ## Originating the Option
 
 The EIL can be initialized by Public Recursive Resolver, ISP Recursive Resolver, or Local Forwarding Resolver.
+
+Examples are given in Appendix B.
 
 ### P-Model: Public Recursive Resolver
 
@@ -289,13 +291,75 @@ Thanks comments for Barry Raveendran Greene, Paul Vixie, Petr Špaček, Brian Ha
 
 Thanks a lot to all in the DNSOP, DNSPRIV and DNSEXT mailing list.
 
-# Appendix A. Example
+# Appendix A. GeoIP-enabled Nameservers Example
+
+## BIND-GeoIP
+
+As described in [BIND-GeoIP](#BIND-GeoIP), BIND 9.10 is able to use data from MaxMind GeoIP databases to achieve restrictions based on the (presumed) geographic location of that address. The ACL itself is still address-based, but the GeoIP-based specification mechanisms can easily populate an ACL with addresses in a certain geographic location. 
+
+    acl "example" {
+      geoip country US;
+      geoip region CA;
+      geoip city "Redwood City"; /* names, etc., must be quoted if they contain spaces */
+    };
+
+## PowerDNS-GeoIP
+
+As described in [PowerDNS-GeoIP](#PowerDNS-GeoIP), PowerDNS supports many geolocation placeholders, such as %co = 3-letter country, %cn = continent, %re = region, %ci = city.
+
+    domains:
+    - domain: geo.example.com
+      ttl: 30
+      records:
+        geo.example.com:
+          - soa: ns1.example.com hostmaster.example.com 2014090125 7200 3600 1209600 3600
+          - ns:
+               content: ns1.example.com
+               ttl: 600
+          - ns: ns2.example.com
+          - mx: 10 mx.example.com
+        fin.eu.service.geo.example.com:
+          - a: 192.0.2.2
+          - txt: hello world
+          - aaaa: 2001:DB8::12:34DE:3
+        # this will result first record being handed out 30% of time
+        swe.eu.service.geo.example.com:
+          - a:
+               content: 192.0.2.3
+               weight: 50
+          - a: 192.0.2.4
+      services:
+        # syntax 1
+        service.geo.example.com: '%co.%cn.service.geo.example.com'
+        # syntax 2
+        service.geo.example.com: [ '%co.%cn.service.geo.example.com', '%cn.service.geo.example.com']
+        # alternative syntax
+      services:
+        service.geo.example.com:
+          default: [ '%co.%cn.service.geo.example.com', '%cn.service.geo.example.com' ]
+          10.0.0.0/8: 'internal.service.geo.example.com'
+
+## Amazon-Geolocation-Routing
+
+As described in [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), Amazon Route 53 lets you choose the resources that serve your traffic based on the geographic location of your users, meaning the location that DNS queries originate from. It allows you to route some queries for a continent to one resource and to route queries for selected countries on that continent to a different resource.
+
+When a browser or other viewer uses a DNS resolver that does support edns-client-subnet, the DNS resolver sends Amazon Route 53 a truncated version of the user's IP address. Amazon Route 53 determines the location of the user based on the truncated IP address rather than the source IP address of the DNS resolver; this typically provides a more accurate estimate of the user's location. Amazon Route 53 then responds to geolocation queries with the DNS record for the user's location.
+
+## DYN-Traffic-Director-ECS
+
+As described in [DYN-Traffic-Director-Geographic-Groups](DYN-Traffic-Director-Geographic-Groups) and [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), Dyn provides the ability to control DNS responses on a granular/customized geographical rule set. Part of the rulesets will be the identification of the global regions, countries, or states and provinces that use a specific DNS server group. DYN uses the ECS information for the geolocation lookup. Once a geolocation is found and a response is selected, it will provide a DNS response back to the source IP address.
+
+## gdnsd-GeoIP
+
+As described in [gdnsd-GeoIP](#gdnsd-GeoIP), gdnsd uses MaxMind's GeoIP binary databases to map address and CNAME results based on geography and monitored service availability. gdnsd supports geolocation codes, such as continent, country, region/subdivision, city.
+
+# Appendix B. EIL Example
 
 Authoritative Nameserver of www.example.com has enabled EIL.
 
 Stub DNS query A resource record of www.example.com .
 
-## Example 1: P-Model
+## P-Model
 
     Stub DNS 
     -> Local Forwarding Resolver (61.48.7.2) 
@@ -307,7 +371,7 @@ Public Forwarding Resolver 223.5.5.5 could enable EIL and generate the EIL OPT d
 
 P-Model will not leak client subnet to Authoritative Nameserver.
 
-## Example 2: I-Model
+## I-Model
 
     Stub DNS 
     -> Local Forwarding Resolver 
@@ -319,7 +383,7 @@ ISP Recursive Resolver 61.135.23.92 could enable EIL and generate the EIL OPT da
 
 If Authoritative Nameserver doesn't know much about 61.135.23.92, EIL will be helpful.
 
-## Example 3: L-Model
+## L-Model
 
     Stub DNS 
     -> Local Fowarding Resolver(58.60.109.234) 
@@ -329,3 +393,5 @@ If Authoritative Nameserver doesn't know much about 61.135.23.92, EIL will be he
 Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is < CN, 44, TEL > based on 58.60.109.234.
 
 L-Model can give the most precisely isp location information for DNS resolution.
+
+
