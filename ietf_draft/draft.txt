@@ -81,31 +81,31 @@ Table of Contents
    3.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   5
    4.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
    5.  The EIL EDNS0 option  . . . . . . . . . . . . . . . . . . . .   6
-   6.  Protocol Description  . . . . . . . . . . . . . . . . . . . .   7
-     6.1.  Originating the Option  . . . . . . . . . . . . . . . . .   7
+   6.  Protocol Description  . . . . . . . . . . . . . . . . . . . .   8
+     6.1.  Originating the Option  . . . . . . . . . . . . . . . . .   8
        6.1.1.  P-Model: Public Recursive Resolver  . . . . . . . . .   8
        6.1.2.  I-Model: ISP Recursive Resolver . . . . . . . . . . .   8
-       6.1.3.  L-Model: Local Forwarding Resolver  . . . . . . . . .   8
+       6.1.3.  L-Model: Local Forwarding Resolver  . . . . . . . . .   9
      6.2.  Generating a Response . . . . . . . . . . . . . . . . . .   9
        6.2.1.  Whitelist . . . . . . . . . . . . . . . . . . . . . .   9
        6.2.2.  Authoritative Nameserver  . . . . . . . . . . . . . .   9
-       6.2.3.  Intermediate Nameserver . . . . . . . . . . . . . . .   9
+       6.2.3.  Intermediate Nameserver . . . . . . . . . . . . . . .  10
      6.3.  Handling EIL Responses and Caching  . . . . . . . . . . .  10
        6.3.1.  Caching the Response  . . . . . . . . . . . . . . . .  10
        6.3.2.  Answering from Cache  . . . . . . . . . . . . . . . .  10
        6.3.3.  Support ECS and EIL at the same time  . . . . . . . .  11
-     6.4.  Delegations and Negative Answers  . . . . . . . . . . . .  11
+     6.4.  Delegations and Negative Answers  . . . . . . . . . . . .  12
      6.5.  Transitivity  . . . . . . . . . . . . . . . . . . . . . .  12
-     6.6.  Response Accuracy . . . . . . . . . . . . . . . . . . . .  12
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
-     7.1.  DNSSEC  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     7.2.  Privacy . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     6.6.  Response Accuracy . . . . . . . . . . . . . . . . . . . .  13
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
+     7.1.  DNSSEC  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     7.2.  Privacy . . . . . . . . . . . . . . . . . . . . . . . . .  13
      7.3.  Target Censorship . . . . . . . . . . . . . . . . . . . .  13
-     7.4.  Cache Size  . . . . . . . . . . . . . . . . . . . . . . .  13
-     7.5.  DDoS  . . . . . . . . . . . . . . . . . . . . . . . . . .  13
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
-   10. Appendix A. Example . . . . . . . . . . . . . . . . . . . . .  14
+     7.4.  Cache Size  . . . . . . . . . . . . . . . . . . . . . . .  14
+     7.5.  DDoS  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
+   10. Appendix A. GeoIP-enabled Nameservers Example . . . . . . . .  14
 
 
 
@@ -114,24 +114,30 @@ Pan & Fu                Expires November 2, 2017                [Page 2]
 Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
-     10.1.  Example 1: P-Model . . . . . . . . . . . . . . . . . . .  14
-     10.2.  Example 2: I-Model . . . . . . . . . . . . . . . . . . .  14
-     10.3.  Example 3: L-Model . . . . . . . . . . . . . . . . . . .  14
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  15
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  15
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
+     10.1.  BIND-GeoIP . . . . . . . . . . . . . . . . . . . . . . .  14
+     10.2.  PowerDNS-GeoIP . . . . . . . . . . . . . . . . . . . . .  15
+     10.3.  Amazon-Geolocation-Routing . . . . . . . . . . . . . . .  16
+     10.4.  DYN-Traffic-Director-ECS . . . . . . . . . . . . . . . .  16
+     10.5.  gdnsd-GeoIP  . . . . . . . . . . . . . . . . . . . . . .  16
+   11. Appendix B. EIL Example . . . . . . . . . . . . . . . . . . .  16
+     11.1.  P-Model  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     11.2.  I-Model  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     11.3.  L-Model  . . . . . . . . . . . . . . . . . . . . . . . .  17
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
 
 1.  Introduction
 
-   Nowadays, many Authoritative Nameservers support GeoIP feature, for
-   example, BIND-GeoIP [BIND-GeoIP], PowerDNS-GeoIP [PowerDNS-GeoIP],
-   Amazon-Geolocation-Routing [Amazon-Geolocation-Routing], DYN-Traffic-
-   Director-ECS [DYN-Traffic-Director-ECS], gdnsd-GeoIP [gdnsd-GeoIP],
-   etc.  These geographically aware Authoritative Nameservers guess the
-   user's geolocation by the client subnet of ECS or by the source IP
-   address of DNS query, return tailor DNS response based on the user's
-   geolocation.
+   Nowadays, many Authoritative Nameservers support GeoIP feature, such
+   as BIND-GeoIP [BIND-GeoIP], PowerDNS-GeoIP [PowerDNS-GeoIP], Amazon-
+   Geolocation-Routing [Amazon-Geolocation-Routing], DYN-Traffic-
+   Director-ECS [DYN-Traffic-Director-ECS], gdnsd-GeoIP [gdnsd-GeoIP]
+   (More details are given in Appendix A).  These geographically aware
+   Authoritative Nameservers guess the user's geolocation by the client
+   subnet of ECS or by the source IP address of DNS query, return tailor
+   DNS response based on the user's geolocation.
 
    ECS is an EDNS0 [RFC6891] option, described in [RFC7871], carries
    client subnet information in DNS queries for Authoritative
@@ -156,12 +162,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    Authoritative Nameserver as ECS, to decide the response without
    guessing geolocation of the IP address.
 
-   EIL is intended for those Local Forwarding Resolvers, Recursive
-   Resolvers and Authoritative Nameservers that would benefit from the
-   extension and not for general purpose deployment.  It could be
-   applied for tailor DNS response like ECS scenario.  EIL can safely be
-   ignored by servers that choose not to implement or enable it.
-
 
 
 
@@ -169,6 +169,12 @@ Pan & Fu                Expires November 2, 2017                [Page 3]
 
 Internet-Draft         ISP Location in DNS Queries              May 2017
 
+
+   EIL is intended for those Local Forwarding Resolvers, Recursive
+   Resolvers and Authoritative Nameservers that would benefit from the
+   extension and not for general purpose deployment.  It could be
+   applied for tailor DNS response like ECS scenario.  EIL can safely be
+   ignored by servers that choose not to implement or enable it.
 
 1.1.  Path Calculation and Tailored DNS Response
 
@@ -212,12 +218,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
    EIL is satisfied if Authoritative Nameservers aggregate the IP
    addresses from the same < COUNTRY, AREA, ISP > isp location to visit
-   the same datacenters, we call that GeoIP-based tailored DNS
-   responses, and these tailored responses have the best "network
-   topological close" distance to the users which are generated from
-   network topology path calculations result.
-
-
 
 
 
@@ -225,6 +225,11 @@ Pan & Fu                Expires November 2, 2017                [Page 4]
 
 Internet-Draft         ISP Location in DNS Queries              May 2017
 
+
+   the same datacenters, we call that GeoIP-based tailored DNS
+   responses, and these tailored responses have the best "network
+   topological close" distance to the users which are generated from
+   network topology path calculations result.
 
    ECS is satisfied if Authoritative Nameservers make tailored DNS
    response down to subnet precise level.  For example, (subnet-1, ...,
@@ -268,11 +273,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
    Authoritative Nameserver: described in [RFC7719] and [RFC2182].  It
    is a server that knows the content of a DNS zone from local
-   knowledge, and thus can answer queries about that zone without
-   needing to query other servers.
-
-
-
 
 
 
@@ -281,6 +281,9 @@ Pan & Fu                Expires November 2, 2017                [Page 5]
 
 Internet-Draft         ISP Location in DNS Queries              May 2017
 
+
+   knowledge, and thus can answer queries about that zone without
+   needing to query other servers.
 
 4.  Overview
 
@@ -312,6 +315,29 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
    It is 14 octets which is structured as follows:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017                [Page 6]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
                  +0 (MSB)                            +1 (LSB)
        +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
     0: |                         OPTION-CODE                           |
@@ -329,14 +355,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
        +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 
        Total: 14 octets.
-
-
-
-
-Pan & Fu                Expires November 2, 2017                [Page 6]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
 
    o  OPTION-CODE, 2 octets, defined in [RFC6891].  EDNS option code
       should be assigned by the IANA.
@@ -369,6 +387,13 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    fields in EIL are set to null value, it means that client doesn't
    want to use EIL.
 
+
+
+Pan & Fu                Expires November 2, 2017                [Page 7]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
    Authoritative Nameservers can send EIL response with the * value 0x2A
    in AREA-CODE field or ISP field (not COUNTRY-CODE field), which
    signifies that the field is wildcard match.  For example, < CN, *,
@@ -384,15 +409,7 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    The EIL can be initialized by Public Recursive Resolver, ISP
    Recursive Resolver, or Local Forwarding Resolver.
 
-
-
-
-
-
-Pan & Fu                Expires November 2, 2017                [Page 7]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
+   Examples are given in Appendix B.
 
 6.1.1.  P-Model: Public Recursive Resolver
 
@@ -426,6 +443,13 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    to end user, and then Authoritative Nameserver doesn't need to "guess
    location of client's IP".
 
+
+
+Pan & Fu                Expires November 2, 2017                [Page 8]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
    EIL will be benefit if the Authoritative Nameserver could not find
    the approximate isp location of ISP Recursive Resolver, which is
    crucial to DNS response accuracy in ECS.
@@ -441,14 +465,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    client's IP, and generate the EIL OPT data, then send the EIL query
    to the intermediate Recursive Resolver.  Intermediate Recursive
    Resolver sends the EIL query to the Authoritative Nameserver.
-
-
-
-
-Pan & Fu                Expires November 2, 2017                [Page 8]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
 
    In this scenario, both Public Recursive Resolver and Authoritative
    Nameserver don't need to "guess location of client's IP", because the
@@ -481,6 +497,15 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    Such a server MUST NOT include an EIL option within replies to
    indicate lack of support for it.
 
+
+
+
+
+Pan & Fu                Expires November 2, 2017                [Page 9]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
    An Authoritative Nameserver that has implemented this protocol and
    receives an EIL option MUST include an EIL option in its response to
    indicate that it SHOULD be cached accordingly.
@@ -498,13 +523,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    area than the AREA-CODE provided in its query, it SHOULD still
    provide the result as the answer to the triggering client request
    even if the client is in a smaller area.
-
-
-
-Pan & Fu                Expires November 2, 2017                [Page 9]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
 
 6.3.  Handling EIL Responses and Caching
 
@@ -535,6 +553,15 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    query tuple of < name, type, class >.  Then, the appropriate RRset
    MUST be chosen based on the isp location matching.
 
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 10]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
    If there was an EIL option, the Intermediate Nameserver will lookup
    for < same COUNTRY-CODE, same ISP, same AREA-CODE > of the same query
    tuple in the cache.  Otherwise, try to find < same COUNTRY-CODE, same
@@ -555,13 +582,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    If no matching is found, the Intermediate Nameserver MUST perform
    resolution as usual.
 
-
-
-Pan & Fu                Expires November 2, 2017               [Page 10]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
-
 6.3.3.  Support ECS and EIL at the same time
 
    Name servers can support ECS and EIL at the same time.  ECS and EIL
@@ -572,6 +592,31 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    If Authoritative Nameservers support both ECS and EIL, Recursive
    resolvers can cache both ECS response and EIL response, there are
    some choices for Recursive Resolvers when they receive DNS queries.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 11]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
 
  Receive EIL query:
      Search in EIL cache.
@@ -610,14 +655,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    EIL's delegation case is similar with ECS, Additional and Authority
    Sections SHOULD ignore EIL.
 
-
-
-
-Pan & Fu                Expires November 2, 2017               [Page 11]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
-
    For negative answers, Authoritative Nameservers return traditional
    negative answers without EIL.
 
@@ -628,6 +665,14 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    Name servers should only enable EIL where it is expected to benefit
    the end users, such as dealing with some latency-sensitive CDN domain
    queries in a complex network environment.
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 12]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
 
 6.6.  Response Accuracy
 
@@ -664,16 +709,6 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    Like ECS, EIL will leak the global zonefile configurations of the
    Authoritative Nameservers more easily than normal case.
 
-
-
-
-
-
-Pan & Fu                Expires November 2, 2017               [Page 12]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
-
 7.3.  Target Censorship
 
    DNS traffic is plain text by default.  It is easily to be blocked or
@@ -684,6 +719,16 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    subnet information.  Therefore, compared to ECS in plain text
    condition, EIL is weaker at blocking record attack, but stronger at
    targeted DNS poisoning attack.
+
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 13]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
 
 7.4.  Cache Size
 
@@ -722,21 +767,138 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
    Thanks a lot to all in the DNSOP, DNSPRIV and DNSEXT mailing list.
 
+10.  Appendix A.  GeoIP-enabled Nameservers Example
+
+10.1.  BIND-GeoIP
+
+   As described in BIND-GeoIP [BIND-GeoIP], BIND 9.10 is able to use
+   data from MaxMind GeoIP databases to achieve restrictions based on
+   the (presumed) geographic location of that address.  The ACL itself
+   is still address-based, but the GeoIP-based specification mechanisms
+   can easily populate an ACL with addresses in a certain geographic
+   location.
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 13]
+
+Pan & Fu                Expires November 2, 2017               [Page 14]
 
 Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
-10.  Appendix A.  Example
+acl "example" {
+  geoip country US;
+  geoip region CA;
+  geoip city "Redwood City"; /* names, etc., must be quoted if they contain spaces */
+};
+
+10.2.  PowerDNS-GeoIP
+
+   As described in PowerDNS-GeoIP [PowerDNS-GeoIP], PowerDNS supports
+   many geolocation placeholders, such as %co = 3-letter country, %cn =
+   continent, %re = region, %ci = city.
+
+domains:
+- domain: geo.example.com
+  ttl: 30
+  records:
+    geo.example.com:
+      - soa: ns1.example.com hostmaster.example.com 2014090125 7200 3600 1209600 3600
+      - ns:
+           content: ns1.example.com
+           ttl: 600
+      - ns: ns2.example.com
+      - mx: 10 mx.example.com
+    fin.eu.service.geo.example.com:
+      - a: 192.0.2.2
+      - txt: hello world
+      - aaaa: 2001:DB8::12:34DE:3
+    # this will result first record being handed out 30% of time
+    swe.eu.service.geo.example.com:
+      - a:
+           content: 192.0.2.3
+           weight: 50
+      - a: 192.0.2.4
+  services:
+    # syntax 1
+    service.geo.example.com: '%co.%cn.service.geo.example.com'
+    # syntax 2
+    service.geo.example.com: [ '%co.%cn.service.geo.example.com', '%cn.service.geo.example.com']
+    # alternative syntax
+  services:
+    service.geo.example.com:
+      default: [ '%co.%cn.service.geo.example.com', '%cn.service.geo.example.com' ]
+      10.0.0.0/8: 'internal.service.geo.example.com'
+
+
+
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 15]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
+10.3.  Amazon-Geolocation-Routing
+
+   As described in Amazon-Geolocation-Routing
+   [Amazon-Geolocation-Routing], Amazon Route 53 lets you choose the
+   resources that serve your traffic based on the geographic location of
+   your users, meaning the location that DNS queries originate from.  It
+   allows you to route some queries for a continent to one resource and
+   to route queries for selected countries on that continent to a
+   different resource.
+
+   When a browser or other viewer uses a DNS resolver that does support
+   edns-client-subnet, the DNS resolver sends Amazon Route 53 a
+   truncated version of the user's IP address.  Amazon Route 53
+   determines the location of the user based on the truncated IP address
+   rather than the source IP address of the DNS resolver; this typically
+   provides a more accurate estimate of the user's location.  Amazon
+   Route 53 then responds to geolocation queries with the DNS record for
+   the user's location.
+
+10.4.  DYN-Traffic-Director-ECS
+
+   As described in DYN-Traffic-Director-Geographic-Groups and DYN-
+   Traffic-Director-ECS [DYN-Traffic-Director-ECS], Dyn provides the
+   ability to control DNS responses on a granular/customized
+   geographical rule set.  Part of the rulesets will be the
+   identification of the global regions, countries, or states and
+   provinces that use a specific DNS server group.  DYN uses the ECS
+   information for the geolocation lookup.  Once a geolocation is found
+   and a response is selected, it will provide a DNS response back to
+   the source IP address.
+
+10.5.  gdnsd-GeoIP
+
+   As described in gdnsd-GeoIP [gdnsd-GeoIP], gdnsd uses MaxMind's GeoIP
+   binary databases to map address and CNAME results based on geography
+   and monitored service availability. gdnsd supports geolocation codes,
+   such as continent, country, region/subdivision, city.
+
+11.  Appendix B.  EIL Example
 
    Authoritative Nameserver of www.example.com has enabled EIL.
 
    Stub DNS query A resource record of www.example.com .
 
-10.1.  Example 1: P-Model
+
+
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 16]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
+
+11.1.  P-Model
 
    Stub DNS
    -> Local Forwarding Resolver (61.48.7.2)
@@ -749,7 +911,7 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
    P-Model will not leak client subnet to Authoritative Nameserver.
 
-10.2.  Example 2: I-Model
+11.2.  I-Model
 
    Stub DNS
    -> Local Forwarding Resolver
@@ -763,7 +925,7 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    If Authoritative Nameserver doesn't know much about 61.135.23.92, EIL
    will be helpful.
 
-10.3.  Example 3: L-Model
+11.3.  L-Model
 
    Stub DNS
    -> Local Fowarding Resolver(58.60.109.234)
@@ -776,22 +938,21 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
    L-Model can give the most precisely isp location information for DNS
    resolution.
 
+12.  References
 
-
-
-
-
-Pan & Fu                Expires November 2, 2017               [Page 14]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
-
-11.  References
-
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC1034]  Mockapetris, P., "Domain Names - Concepts and Facilities",
               RFC 1034, November 1987.
+
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 17]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
 
    [RFC1035]  Mockapetris, P., "Domain Names - Implementation and
               Specification", RFC 1035, November 1987.
@@ -816,7 +977,7 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
               Kumari, "Client Subnet in DNS Queries", RFC 7871, May
               2016.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [Amazon-Geolocation-Routing]
               Amazon, "Amazon Route 53: Geolocation Routing",
@@ -832,19 +993,22 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
               instance is received with ECS information",
               <https://help.dyn.com/edns-client-subnet-faq-info/#q6>.
 
-
-
-
-
-
-Pan & Fu                Expires November 2, 2017               [Page 15]
-
-Internet-Draft         ISP Location in DNS Queries              May 2017
-
+   [DYN-Traffic-Director-Geographic-Groups]
+              DYN, "Predefined Geographic Groups of Traffic Director",
+              <https://help.dyn.com/traffic-director-predefined-
+              geographic-regions/>.
 
    [gdnsd-GeoIP]
               gdnsd, "GdnsdPluginGeoip",
               <https://github.com/gdnsd/gdnsd/wiki/GdnsdPluginGeoip>.
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 18]
+
+Internet-Draft         ISP Location in DNS Queries              May 2017
+
 
    [ISO3166]  ISO 3166, "Country Codes",
               <http://www.iso.org/iso/country_codes>.
@@ -893,4 +1057,8 @@ Authors' Addresses
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 16]
+
+
+
+
+Pan & Fu                Expires November 2, 2017               [Page 19]
