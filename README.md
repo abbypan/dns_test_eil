@@ -1,18 +1,18 @@
 # dns_test_eil
 
-dns test eil
+## Background
 
-EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
+[Paper: EIL_Dealing_with_the_Privacy_Problem_of_ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPaG9nZ045VXRrZzg)
 
-AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
+[Slide: EILDealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
 
 Draft (area-code : country subdivision code)
 - Newest draft: [draft.txt](ietf_draft/draft.txt)
 - Status:       https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
 
-[Paper: EIL_Dealing_with_the_Privacy_Problem_of_ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPaG9nZ045VXRrZzg)
+EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
-[Slide: EILDealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
+AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
 
 ## INSTALL
  

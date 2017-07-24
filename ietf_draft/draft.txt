@@ -5,8 +5,8 @@
 dnsop                                                             L. Pan
 Internet-Draft
 Intended status: Informational                                     Y. Fu
-Expires: November 2, 2017                                          CNNIC
-                                                                May 2017
+Expires: January 18, 2018                                          CNNIC
+                                                           July 17, 2017
 
 
                       ISP Location in DNS Queries
@@ -48,14 +48,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 2, 2017.
+   This Internet-Draft will expire on January 18, 2018.
 
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 1]
+Pan & Fu                Expires January 18, 2018                [Page 1]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 2]
+Pan & Fu                Expires January 18, 2018                [Page 2]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
      10.1.  BIND-GeoIP . . . . . . . . . . . . . . . . . . . . . . .  14
@@ -165,9 +165,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 3]
+Pan & Fu                Expires January 18, 2018                [Page 3]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    EIL is intended for those Local Forwarding Resolvers, Recursive
@@ -221,9 +221,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 4]
+Pan & Fu                Expires January 18, 2018                [Page 4]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    the same datacenters, we call that GeoIP-based tailored DNS
@@ -277,9 +277,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 5]
+Pan & Fu                Expires January 18, 2018                [Page 5]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    knowledge, and thus can answer queries about that zone without
@@ -333,9 +333,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 6]
+Pan & Fu                Expires January 18, 2018                [Page 6]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
                  +0 (MSB)                            +1 (LSB)
@@ -389,9 +389,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 7]
+Pan & Fu                Expires January 18, 2018                [Page 7]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    Authoritative Nameservers can send EIL response with the * value 0x2A
@@ -445,9 +445,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 8]
+Pan & Fu                Expires January 18, 2018                [Page 8]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    EIL will be benefit if the Authoritative Nameserver could not find
@@ -501,9 +501,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017                [Page 9]
+Pan & Fu                Expires January 18, 2018                [Page 9]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    An Authoritative Nameserver that has implemented this protocol and
@@ -557,9 +557,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 10]
+Pan & Fu                Expires January 18, 2018               [Page 10]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    If there was an EIL option, the Intermediate Nameserver will lookup
@@ -613,9 +613,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 11]
+Pan & Fu                Expires January 18, 2018               [Page 11]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
  Receive EIL query:
@@ -669,9 +669,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 12]
+Pan & Fu                Expires January 18, 2018               [Page 12]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 6.6.  Response Accuracy
@@ -725,9 +725,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 13]
+Pan & Fu                Expires January 18, 2018               [Page 13]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 7.4.  Cache Size
@@ -781,9 +781,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 14]
+Pan & Fu                Expires January 18, 2018               [Page 14]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 acl "example" {
@@ -837,9 +837,9 @@ domains:
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 15]
+Pan & Fu                Expires January 18, 2018               [Page 15]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 10.3.  Amazon-Geolocation-Routing
@@ -893,9 +893,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 16]
+Pan & Fu                Expires January 18, 2018               [Page 16]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
 11.1.  P-Model
@@ -949,9 +949,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 17]
+Pan & Fu                Expires January 18, 2018               [Page 17]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    [RFC1035]  Mockapetris, P., "Domain Names - Implementation and
@@ -1005,9 +1005,9 @@ Internet-Draft         ISP Location in DNS Queries              May 2017
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 18]
+Pan & Fu                Expires January 18, 2018               [Page 18]
 
-Internet-Draft         ISP Location in DNS Queries              May 2017
+Internet-Draft         ISP Location in DNS Queries             July 2017
 
 
    [ISO3166]  ISO 3166, "Country Codes",
@@ -1061,4 +1061,4 @@ Authors' Addresses
 
 
 
-Pan & Fu                Expires November 2, 2017               [Page 19]
+Pan & Fu                Expires January 18, 2018               [Page 19]
