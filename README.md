@@ -165,8 +165,4 @@ Alternative, the GeoIP-enabled Authoritative Nameservers can directly use the < 
 ![13.eil_sufficiant_eil](slide/13.eil_sufficiant_eil.png)
 
 
-<style type="text/css">
-    img {
-        width: 70%;
-    }
-</style>
+<style type="text/css"> img { width: 70%; }</style>
