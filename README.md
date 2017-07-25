@@ -32,11 +32,7 @@ AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
 
 [EIL](#eil)
 
-[EIL: P-model](#eil-p-model)
-
-[EIL: L-model](#eil-l-model)
-
-[EIL: I-model](#eil-i-model)
+[EIL: P-model](#eil-p-model), [EIL: L-model](#eil-l-model), [EIL: I-model](#eil-i-model)
 
 [EIL models trade off](#eil-models-trade-off)
 
@@ -163,6 +159,3 @@ If the GeoIP-enabled Authoritative Nameservers support ECS, they can use the cli
 Alternative, the GeoIP-enabled Authoritative Nameservers can directly use the < COUNTRY, AREA, ISP > information of EIL without geolocation detecting.
 
 ![13.eil_sufficiant_eil](slide/13.eil_sufficiant_eil.png)
-
-
-<style type="text/css"> img { width: 70%; }</style>
