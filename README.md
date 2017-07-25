@@ -1,61 +1,137 @@
 # dns_test_eil
 
+install guide: [INSTALL.md](INSTALL.md)
+
 ## Background
+
+[DNS Privacy Workshop 2017](https://www.internetsociety.org/events/ndss-symposium/ndss-symposium-2017/dns-privacy-workshop-2017-programme/dns-privacy-workshop)
 
 [Paper: EIL_Dealing_with_the_Privacy_Problem_of_ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPaG9nZ045VXRrZzg)
 
 [Slide: EILDealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
 
 Draft (area-code : country subdivision code)
-- Newest draft: [draft.txt](ietf_draft/draft.txt)
+- latest draft: [draft.txt](ietf_draft/draft.txt)
 - Status:       https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
 
 EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
 
 AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
 
-## INSTALL
- 
-    cpan App::cpanminus
+## Data Provider
 
-    cpanm Net::DNS JSON File::Slurp
+IP transit  is expensive.
 
-## FILES
+Avoid cross-ISP visit.
 
-    eil_whitelist.json :  country_code, area_code, isp
+![01.data_provider](slide/01.data_provider.png)
 
-    eil_zone_www.qq.com.csv : take www.qq.com for test, A RRDATA for eil
+## GeoIP-enabled Authoritative Server
 
-    recv_eil_aut.pl : demo authority server, listen on 127.0.0.1:53
+GeoIP-enabled AUTH  return tailor  response based on  the geolocation of Resolver’s IP.
 
-    recv_eil_rec.pl : demo recursive server, listen on 127.0.0.1:5354, send eil dns query to authority 127.0.0.1:53
-    
-    send_eil.pl : client, send eil dns query to recursive 127.0.0.1:5354
+Is the resolver's IP address close to the client's IP address?
 
-## TEST
+Is  the  IP  geolocation  database used  by  AUTH with high quality?
 
-authority:
+![02.geoip_auth](slide/02.geoip_auth.png)
 
-    $ cd dns_test_eil 
-    $ sudo perl recv_eil_aut.pl
+## Public DNS
 
-recursive:
+ISP Resolver’s IP is close to client’s IP.
 
-    $ cd dns_test_eil
-    $ sudo perl recv_eil_rec.pl
+Public DNS Resolver’s IP may not. 
 
-client:
+![03.public_dns](slide/03.public_dns.png)
 
-    $ cd dns_test_eil
+## RFC7871: ECS
 
-    # receive same RR : ECS(114.240.0.0/24) => EIL(CN, 11, UNI), indicates (CHINA, BEIJING, UNICOM)
-    $ dig @ns-cmn1.qq.com. www.qq.com  +subnet=114.240.0.0/24 > log/ecs_114.240.0.0.log
-    $ perl send_eil.pl www.qq.com CN 11 UNI > log/eil_cn_11_uni.log
+ECS carry client subnet information for AUTH.
 
-    # receive same RR : ECS(219.137.222.0/24) => EIL(CN, 44, TEL), indicates (CHINA, GUANGDONG, TELECOM)
-    $ dig @ns-cmn1.qq.com. www.qq.com  +subnet=219.137.222.0/24 > log/ecs_219.137.222.0.log
-    $ perl send_eil.pl www.qq.com CN 44 TEL > log/eil_cn_44_tel.log
-   
-    $ receive same RR : ECS(166.171.186.0/24) => EIL(US, NY, ATT), indicates (United States, New York, AT&T)
-    $ dig @ns-cmn1.qq.com www.qq.com +subnet=166.171.186.0/24 > log/ecs_166.171.186.0.log
-    $ perl send_eil.pl www.qq.com US NY ATT > log/eil_us_ny_att.log
+Good:
+- Better determine end user’s location.
+- GeoIP-enabled AUTH map client subnet to user’s geolocation.
+
+Bad:
+- Leak client subnet on the resolution to AUTH.
+
+![04.ecs](slide/04.ecs.png)
+
+## DNS Privacy
+
+The more domains publish their zones on a third-party AUTH, 
+
+the more end user privacy information can be gathered by the AUTH according to the ECS queries.
+
+![05.dns_privacy](slide/05.dns_privacy.png)
+
+## EIL
+
+COUNTRY-CODE: 2  octets
+- defined  in ISO3166
+
+AREA-CODE:  6 octets
+- ISO  3166-2’s  country  subdivision  code 
+
+ISP: 4 octets
+- using  shortcut  names
+- unique in COUNTRY
+
+    <CN, 35,  TEL>  indicates <China, Fujian, China Telecom>
+
+![06.eil](slide/06.eil.png)
+
+## EIL: P-model
+
+P-model is close to ECS.
+
+![07.eil_public_model](slide/07.eil_public_model.png)
+
+## EIL: L-model
+
+L-model has the most precisely geolocation.
+
+![08.eil_local_model](slide/08.eil_local_model.png)
+
+## EIL: I-model
+
+I-model will benefit if the AUTH could not find the approximate geolocation of ISP recursive resolver.
+
+![09.eil_isp_model](slide/09.eil_isp_model.png)
+
+## EIL models trade off 
+
+P-model is the most recommended.
+
+L-model  requires  firmware  upgrade  EIL  support  on the first-hop router.
+
+![06.eil_models_trade_off](slide/06.eil_models_trade_off.png)
+
+## Support ECS and EIL at the same time
+
+GeoIP-enabled AUTH can directly support EIL.
+
+Recursive Resolver can choose to:
+- send EIL query, if AUTH support EIL
+- send ECS query, if AUTH support ECS
+- send EIL query to replace ECS query  for user privacy concern, if AUTH both support ECS and EIL
+
+![10.send_ecs_eil](slide/10.send_ecs_eil.png)
+
+## Path Calculation and Tailored DNS Response
+
+Data Providers make path calculations to optimize content delivery on the Internet based on the network topology, considering many factors such as IP, RIPs, FIBs, AS Path hops, system load, content availability, path latency, etc.  
+
+Note that, Data Providers have the full details of the clients, they can make any complex path calculations without ECS and EIL.
+
+![11.path_calc](slide/11.path_calc.png)
+
+## EIL is sufficient for GeoIP-enabled Authoritative Nameserver
+
+If the GeoIP-enabled Authoritative Nameservers support ECS, they can use the client subnet information of ECS instead of resolver's address for geolocation detecting.  
+
+![12.eil_sufficiant_ecs](slide/12.eil_sufficiant_ecs.png)
+
+Alternative, the GeoIP-enabled Authoritative Nameservers can directly use the < COUNTRY, AREA, ISP > information of EIL without geolocation detecting.
+
+![13.eil_sufficiant_eil](slide/13.eil_sufficiant_eil.png)
