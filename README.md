@@ -52,7 +52,7 @@ IP transit  is expensive.
 
 Avoid cross-ISP visit.
 
-![01.data_provider](slide/01.data_provider.png){ width : 70% }
+![01.data_provider](slide/01.data_provider.png){: width : 70% }
 
 ## GeoIP-enabled Authoritative Server
 
@@ -62,7 +62,7 @@ Is the resolver's IP address close to the client's IP address?
 
 Is  the  IP  geolocation  database used  by  AUTH with high quality?
 
-![02.geoip_auth](slide/02.geoip_auth.png){ width : 70% }
+![02.geoip_auth](slide/02.geoip_auth.png){: width : 70% }
 
 ## Public DNS
 
@@ -70,7 +70,7 @@ ISP Resolver’s IP is close to client’s IP.
 
 Public DNS Resolver’s IP may not. 
 
-![03.public_dns](slide/03.public_dns.png){ width : 70% }
+![03.public_dns](slide/03.public_dns.png){: width : 70% }
 
 ## RFC7871: ECS
 
@@ -83,7 +83,7 @@ Good:
 Bad:
 - Leak client subnet on the resolution to AUTH.
 
-![04.ecs](slide/04.ecs.png){ width : 70% }
+![04.ecs](slide/04.ecs.png){: width : 70% }
 
 ## DNS Privacy
 
@@ -91,7 +91,7 @@ The more domains publish their zones on a third-party AUTH,
 
 the more end user privacy information can be gathered by the AUTH according to the ECS queries.
 
-![05.dns_privacy](slide/05.dns_privacy.png){ width : 70% }
+![05.dns_privacy](slide/05.dns_privacy.png){: width : 70% }
 
 ## EIL
 
@@ -107,25 +107,25 @@ ISP: 4 octets
 
     <CN, 35,  TEL>  indicates <China, Fujian, China Telecom>
 
-![06.eil](slide/06.eil.png){ width : 70% }
+![06.eil](slide/06.eil.png){: width : 70% }
 
 ## EIL: P-model
 
 P-model is close to ECS.
 
-![07.eil_public_model](slide/07.eil_public_model.png){ width : 70% }
+![07.eil_public_model](slide/07.eil_public_model.png){: width : 70% }
 
 ## EIL: L-model
 
 L-model has the most precisely geolocation.
 
-![08.eil_local_model](slide/08.eil_local_model.png){ width : 70% }
+![08.eil_local_model](slide/08.eil_local_model.png){: width : 70% }
 
 ## EIL: I-model
 
 I-model will benefit if the AUTH could not find the approximate geolocation of ISP recursive resolver.
 
-![09.eil_isp_model](slide/09.eil_isp_model.png){ width : 70% }
+![09.eil_isp_model](slide/09.eil_isp_model.png){: width : 70% }
 
 ## EIL models trade off 
 
@@ -133,7 +133,7 @@ P-model is the most recommended.
 
 L-model  requires  firmware  upgrade  EIL  support  on the first-hop router.
 
-![06.eil_models_trade_off](slide/06.eil_models_trade_off.png){ width : 70% }
+![06.eil_models_trade_off](slide/06.eil_models_trade_off.png){: width : 70% }
 
 ## Support ECS and EIL at the same time
 
@@ -144,7 +144,7 @@ Recursive Resolver can choose to:
 - send ECS query, if AUTH support ECS
 - send EIL query to replace ECS query  for user privacy concern, if AUTH both support ECS and EIL
 
-![10.send_ecs_eil](slide/10.send_ecs_eil.png){ width : 70% }
+![10.send_ecs_eil](slide/10.send_ecs_eil.png){: width : 70% }
 
 ## Path Calculation and Tailored DNS Response
 
@@ -152,14 +152,14 @@ Data Providers make path calculations to optimize content delivery on the Intern
 
 Note that, Data Providers have the full details of the clients, they can make any complex path calculations without ECS and EIL.
 
-![11.path_calc](slide/11.path_calc.png){ width : 70% }
+![11.path_calc](slide/11.path_calc.png){: width : 70% }
 
 ## EIL is sufficient for GeoIP-enabled Authoritative Nameserver
 
 If the GeoIP-enabled Authoritative Nameservers support ECS, they can use the client subnet information of ECS instead of resolver's address for geolocation detecting.  
 
-![12.eil_sufficiant_ecs](slide/12.eil_sufficiant_ecs.png){ width : 70% }
+![12.eil_sufficiant_ecs](slide/12.eil_sufficiant_ecs.png){: width : 70% }
 
 Alternative, the GeoIP-enabled Authoritative Nameservers can directly use the < COUNTRY, AREA, ISP > information of EIL without geolocation detecting.
 
-![13.eil_sufficiant_eil](slide/13.eil_sufficiant_eil.png){ width : 70% }
+![13.eil_sufficiant_eil](slide/13.eil_sufficiant_eil.png){: width : 70% }
