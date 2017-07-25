@@ -18,6 +18,34 @@ EDNS option code should be assigned by the expert review process as defined by t
 
 AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
 
+## Slide TOC
+
+[Data Provider](#data-provider)
+
+[GeoIP-enabled Authoritative Server](#geoip-enabled-authoritative-server)
+
+[Public DNS](#public-dns)
+
+[RFC7871: ECS](#rfc7871-ecs)
+
+[DNS Privacy](#dns-privacy)
+
+[EIL](#eil)
+
+[EIL: P-model](#eil-p-model)
+
+[EIL: L-model](#eil-l-model)
+
+[EIL: I-model](#eil-i-model)
+
+[EIL models trade off](#eil-models-trade-off)
+
+[Support ECS and EIL at the same time](#support-ecs-and-eil-at-the-same-time)
+
+[Path Calculation and Tailored DNS Response](#path-calculation-and-tailored-dns-response)
+
+[EIL is sufficient for GeoIP-enabled Authoritative Nameserver](#eil-is-sufficient-for-geoip-enabled-authoritative-nameserver)
+
 ## Data Provider
 
 IP transit  is expensive.
