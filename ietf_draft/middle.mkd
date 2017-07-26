@@ -66,7 +66,7 @@ The security concerns for EIL are like ECS, such as cache growth, spoof EDNS0 op
 
 The EIL is an EDNS0 option to include the isp location of client in DNS messages.
 
-It is 14 octets which is structured as follows:
+It is 16 octets which is structured as follows:
 
                     +0 (MSB)                            +1 (LSB)
           +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
@@ -84,7 +84,7 @@ It is 14 octets which is structured as follows:
           |                                                               |
           +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 
-          Total: 14 octets.
+          Total: 16 octets.
 
    *  OPTION-CODE, 2 octets, defined in [](#RFC6891). EDNS option code should be assigned by the IANA.
 
@@ -287,7 +287,7 @@ This document defines EIL, need request IANA to assign a new EDNS0 option code t
 
 EIL is inspired by ECS, the authors especially thanks to C. Contavalli, W. van der Gaast, D. Lawrence, and W. Kumari.
 
-Thanks comments for Barry Raveendran Greene, Paul Vixie, Petr Špaček, Brian Hartvigsen, Ask Bjørn Hansen.
+Thanks comments for Barry Raveendran Greene, Paul Vixie, Petr Špaček, Brian Hartvigsen, Ask Bjørn Hansen, Dave Lawrence.
 
 Thanks a lot to all in the DNSOP, DNSPRIV and DNSEXT mailing list.
 
