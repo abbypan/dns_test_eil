@@ -1,6 +1,6 @@
 # Introduction
 
-Nowadays, many Authoritative Nameservers support GeoIP feature, such as [BIND-GeoIP](#BIND-GeoIP), [PowerDNS-GeoIP](#PowerDNS-GeoIP), [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), [gdnsd-GeoIP](#gdnsd-GeoIP) (More details are given in Appendix A). These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
+Nowadays, many Authoritative Nameservers support GeoIP feature, such as [](#BIND-GeoIP), [](#PowerDNS-GeoIP), [](#Amazon-Geolocation-Routing), [](#DYN-Traffic-Director-ECS), [](#gdnsd-GeoIP) (More details are given in Appendix A). These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
 
 ECS is an [EDNS0](#RFC6891) option, described in [](#RFC7871), carries client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
 
@@ -90,11 +90,11 @@ It is 16 octets which is structured as follows:
 
    *  OPTION-LENGTH, 2 octets, defined in [](#RFC6891), contains the length of the payload (everything after OPTION-LENGTH) in octets.
 
-   *  COUNTRY-CODE, 2 octets, uppercase, defined in [](#ISO3166), indicates the country information of the client’s IP. For example, China's COUNTRY-CODE is CN.
+   *  COUNTRY-CODE, 2 octets, uppercase, defined in [](#ISO3166), indicates the country information of the client's IP. For example, China's COUNTRY-CODE is CN.
 
-   *  AREA-CODE, 6 octets, uppercase, defined in [](#ISO3166) country subdivision code, indicates the area information of the client’s IP. For example, The AREA-CODE of Fujian Province in China is 35.
+   *  AREA-CODE, 6 octets, uppercase, defined in [](#ISO3166) country subdivision code, indicates the area information of the client's IP. For example, The AREA-CODE of Fujian Province in China is 35.
 
-   *  ISP, 4 octets, uppercase, indicates the ISP information of the client’s IP, using shortcut names. ISP shortcut names are unique within the context of the COUNTRY-CODE. For example, the shortcut name of China Telecommunications Corporation is TEL, the shortcut name of China United Network Communications is UNI, the shortcut name of China Mobile is MOB, etc.
+   *  ISP, 4 octets, uppercase, indicates the ISP information of the client's IP, using shortcut names. ISP shortcut names are unique within the context of the COUNTRY-CODE. For example, the shortcut name of China Telecommunications Corporation is TEL, the shortcut name of China United Network Communications is UNI, the shortcut name of China Mobile is MOB, etc.
 
 All fields are in network byte order ("big-endian", per [](#RFC1700), Data Notation).
 
@@ -118,7 +118,7 @@ Examples are given in Appendix B.
 
 Public Recursive Resolvers are not close to many users because the service providers couldn't deploy servers in every country and every ISP's network, which will affect the response accuracy of Authoritative Nameservers. To encounter this problem, ECS shifts the client subnet information to Authoritative Nameserver, but rises user privacy concerns.
 
-Therefore, to keep balance between precise and privacy, when a Public Recursive Resolver receives a DNS query, it can guess isp location of client's IP and generate the EIL OPT data, then send EIL query to the Authoritative Nameserver. This will move the "guess location of client’s IP" work from Authoritative Nameserver back to Public Recursive Resolver, lighten the burden of Authoritative Nameserver, but increase DDoS risk on Public Recursive Resolver.
+Therefore, to keep balance between precise and privacy, when a Public Recursive Resolver receives a DNS query, it can guess isp location of client's IP and generate the EIL OPT data, then send EIL query to the Authoritative Nameserver. This will move the "guess location of client's IP" work from Authoritative Nameserver back to Public Recursive Resolver, lighten the burden of Authoritative Nameserver, but increase DDoS risk on Public Recursive Resolver.
 
 In order to improve the user's privacy, if a Recursive Resolver receives a DNS query with ECS, it can guess the isp location of SOURCE-PREFIX from the ECS OPT data, and make a new DNS query with EIL, then send the query to Authoritative Nameserver which supports EIL.
 
@@ -126,7 +126,7 @@ P-model is the most recommended and close to the ECS.
 
 ### I-Model: ISP Recursive Resolver
 
-ISP Recursive Resolver only serves its customers, each of whom has a static isp location. ISP Recursive Resolver can add EIL transparent to end user, and then Authoritative Nameserver doesn't need to "guess location of client’s IP".
+ISP Recursive Resolver only serves its customers, each of whom has a static isp location. ISP Recursive Resolver can add EIL transparent to end user, and then Authoritative Nameserver doesn't need to "guess location of client's IP".
 
 EIL will be benefit if the Authoritative Nameserver could not find the approximate isp location of ISP Recursive Resolver, which is crucial to DNS response accuracy in ECS.
 
@@ -134,7 +134,7 @@ EIL will be benefit if the Authoritative Nameserver could not find the approxima
 
 Local Forwarding Resolver is usually on the first-hop router, such as public Wi-Fi hotspot routers and Cisco/Linksys/Netgear/TP-LINK home routers.
 
-When a Local Forwarding Resolver that implements EIL receives a DNS query from an end user, it surely can know about the isp location of client’s IP, and generate the EIL OPT data, then send the EIL query to the intermediate Recursive Resolver. Intermediate Recursive Resolver sends the EIL query to the Authoritative Nameserver.
+When a Local Forwarding Resolver that implements EIL receives a DNS query from an end user, it surely can know about the isp location of client's IP, and generate the EIL OPT data, then send the EIL query to the intermediate Recursive Resolver. Intermediate Recursive Resolver sends the EIL query to the Authoritative Nameserver.
 
 In this scenario, both Public Recursive Resolver and Authoritative Nameserver don't need to "guess location of client's IP", because the
 Local Forwarding Resolver supplies the isp location precisely. That is, EIL can reduce dependence on the IP geolocation database quality, which is crucial to DNS response accuracy in ECS.
@@ -191,7 +191,7 @@ If no matching is found, the Intermediate Nameserver MUST perform resolution as 
 
 ### Support ECS and EIL at the same time
 
-Name servers can support ECS and EIL at the same time. ECS and EIL can’t be both initiated at the same DNS packet. It is better for user privacy if name servers initiate the EIL query prior to the ECS query.
+Name servers can support ECS and EIL at the same time. ECS and EIL can't be both initiated at the same DNS packet. It is better for user privacy if name servers initiate the EIL query prior to the ECS query.
 
 If Authoritative Nameservers support both ECS and EIL, Recursive resolvers can cache both ECS response and EIL response, there are some choices for Recursive Resolvers when they receive DNS queries.
 
@@ -243,7 +243,17 @@ Name servers should only enable EIL where it is expected to benefit the end user
 
 GeoIP-enabled Authoritative Nameservers that support ECS can support EIL smoothly.
 
-Compared to ECS, EIL can reduce dependence on the IP geolocation database quality. EIL will rise the response accuracy of Authoritative Nameserver if its database can not find approximate isp location of ECS client subnet, ensure user latency. EIL will help Authoritative Nameservers to avoid cross-isp visit if its database can not find approximate isp location of ECS client subnet, save IP transit cost.
+EIL directly provide the same sufficient information for the GeoIP-enabled Authoritative Nameserver as ECS. Compared to ECS, EIL can reduce Authoritative Nameserver's dependence on the IP geolocation database quality. 
+
+If Authoritative Nameserver can not find approximate isp location of ECS client subnet, EIL's isp location can help to rise the response accuracy, avoid cross-isp response, save IP transit cost for Data Provider.
+
+## Why not use AS number to build EIL
+
+AS number is not an ideal object to balance between response accuracy and user privacy, for example:
+
+* AS24151 can directly guide to China Internet Network Infomation Center, it is not good for user privacy.
+
+* AS4134 contains a huge amount of IP prefixes whose geolocation covers from South China to North China, AS number can not afford the response accuracy consideration.
 
 # Security Considerations
 
@@ -263,7 +273,7 @@ Like ECS, EIL will leak the global zonefile configurations of the Authoritative 
 
 DNS traffic is plain text by default. It is easily to be blocked or poisoned by internet target censorship. To bypass the censorship, it is better to encrypt the DNS traffic or use some proxy tunnel.
 
-EIL’s isp location information covers bigger area than ECS’s client subnet information. Therefore, compared to ECS in plain text condition, EIL is weaker at blocking record attack, but stronger at targeted DNS poisoning attack.
+EIL's isp location information covers bigger area than ECS's client subnet information. Therefore, compared to ECS in plain text condition, EIL is weaker at blocking record attack, but stronger at targeted DNS poisoning attack.
 
 ## Cache Size
 
@@ -289,13 +299,13 @@ EIL is inspired by ECS, the authors especially thanks to C. Contavalli, W. van d
 
 Thanks comments for Barry Raveendran Greene, Paul Vixie, Petr Špaček, Brian Hartvigsen, Ask Bjørn Hansen, Dave Lawrence.
 
-Thanks a lot to all in the DNSOP, DNSPRIV and DNSEXT mailing list.
+Thanks a lot to all in the DNSOP, DNSPRIV mailing list.
 
 # Appendix A. GeoIP-enabled Nameservers Example
 
 ## BIND-GeoIP
 
-As described in [BIND-GeoIP](#BIND-GeoIP), BIND 9.10 is able to use data from MaxMind GeoIP databases to achieve restrictions based on the (presumed) geographic location of that address. The ACL itself is still address-based, but the GeoIP-based specification mechanisms can easily populate an ACL with addresses in a certain geographic location. 
+As described in [](#BIND-GeoIP), BIND 9.10 is able to use data from MaxMind GeoIP databases to achieve restrictions based on the (presumed) geographic location of that address. The ACL itself is still address-based, but the GeoIP-based specification mechanisms can easily populate an ACL with addresses in a certain geographic location. 
 
     acl "example" {
       geoip country US;
@@ -305,7 +315,7 @@ As described in [BIND-GeoIP](#BIND-GeoIP), BIND 9.10 is able to use data from Ma
 
 ## PowerDNS-GeoIP
 
-As described in [PowerDNS-GeoIP](#PowerDNS-GeoIP), PowerDNS supports many geolocation placeholders, such as %co = 3-letter country, %cn = continent, %re = region, %ci = city.
+As described in [](#PowerDNS-GeoIP), PowerDNS supports many geolocation placeholders, such as %co = 3-letter country, %cn = continent, %re = region, %ci = city.
 
     domains:
     - domain: geo.example.com
@@ -341,17 +351,17 @@ As described in [PowerDNS-GeoIP](#PowerDNS-GeoIP), PowerDNS supports many geoloc
 
 ## Amazon-Geolocation-Routing
 
-As described in [Amazon-Geolocation-Routing](#Amazon-Geolocation-Routing), Amazon Route 53 lets you choose the resources that serve your traffic based on the geographic location of your users, meaning the location that DNS queries originate from. It allows you to route some queries for a continent to one resource and to route queries for selected countries on that continent to a different resource.
+As described in [](#Amazon-Geolocation-Routing), Amazon Route 53 lets you choose the resources that serve your traffic based on the geographic location of your users, meaning the location that DNS queries originate from. It allows you to route some queries for a continent to one resource and to route queries for selected countries on that continent to a different resource.
 
 When a browser or other viewer uses a DNS resolver that does support edns-client-subnet, the DNS resolver sends Amazon Route 53 a truncated version of the user's IP address. Amazon Route 53 determines the location of the user based on the truncated IP address rather than the source IP address of the DNS resolver; this typically provides a more accurate estimate of the user's location. Amazon Route 53 then responds to geolocation queries with the DNS record for the user's location.
 
 ## DYN-Traffic-Director-ECS
 
-As described in [DYN-Traffic-Director-Geographic-Groups](DYN-Traffic-Director-Geographic-Groups) and [DYN-Traffic-Director-ECS](#DYN-Traffic-Director-ECS), Dyn provides the ability to control DNS responses on a granular/customized geographical rule set. Part of the rulesets will be the identification of the global regions, countries, or states and provinces that use a specific DNS server group. DYN uses the ECS information for the geolocation lookup. Once a geolocation is found and a response is selected, it will provide a DNS response back to the source IP address.
+As described in [](DYN-Traffic-Director-Geographic-Groups) and [](#DYN-Traffic-Director-ECS), Dyn provides the ability to control DNS responses on a granular/customized geographical rule set. Part of the rulesets will be the identification of the global regions, countries, or states and provinces that use a specific DNS server group. DYN uses the ECS information for the geolocation lookup. Once a geolocation is found and a response is selected, it will provide a DNS response back to the source IP address.
 
 ## gdnsd-GeoIP
 
-As described in [gdnsd-GeoIP](#gdnsd-GeoIP), gdnsd uses MaxMind's GeoIP binary databases to map address and CNAME results based on geography and monitored service availability. gdnsd supports geolocation codes, such as continent, country, region/subdivision, city.
+As described in [](#gdnsd-GeoIP), gdnsd uses MaxMind's GeoIP binary databases to map address and CNAME results based on geography and monitored service availability. gdnsd supports geolocation codes, such as continent, country, region/subdivision, city.
 
 # Appendix B. EIL Example
 
