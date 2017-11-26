@@ -72,6 +72,18 @@
     <format type='' target='' />
 </reference>
 
+<reference anchor='Windows-Server-GeoLocation' target='https://docs.microsoft.com/en-us/windows-server/networking/dns/deploy/primary-geo-location'>
+    <front>
+        <title abbrev='Windows-Server-GeoLocation'>Use DNS Policy for Geo-Location Based Traffic Management with Primary Servers</title>
+        <author initials='' surname='' fullname=''>
+            <organization>Microsoft</organization>
+            <address>
+                <email></email></address></author>
+        <date year='' month='' />
+    </front>
+    <format type='' target='' />
+</reference>
+
 <reference anchor='ISO3166' target='http://www.iso.org/iso/country_codes'>
     <front>
         <title abbrev='Country Codes'>Country Codes</title>

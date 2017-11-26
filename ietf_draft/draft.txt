@@ -5,8 +5,8 @@
 dnsop                                                             L. Pan
 Internet-Draft
 Intended status: Informational                                     Y. Fu
-Expires: March 30, 2018                                            CNNIC
-                                                      September 26, 2017
+Expires: March 5, 2018                                             CNNIC
+                                                                Sep 2017
 
 
                       ISP Location in DNS Queries
@@ -48,14 +48,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 30, 2018.
+   This Internet-Draft will expire on March 5, 2018.
 
 
 
 
-Pan & Fu                 Expires March 30, 2018                 [Page 1]
+Pan & Fu                  Expires March 5, 2018                 [Page 1]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Pan & Fu                 Expires March 30, 2018                 [Page 2]
+Pan & Fu                  Expires March 5, 2018                 [Page 2]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    10. Appendix A. GeoIP-enabled Nameservers Example . . . . . . . .  15
@@ -120,24 +120,26 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
      10.3.  Amazon-Geolocation-Routing . . . . . . . . . . . . . . .  16
      10.4.  DYN-Traffic-Director-ECS . . . . . . . . . . . . . . . .  17
      10.5.  gdnsd-GeoIP  . . . . . . . . . . . . . . . . . . . . . .  17
+     10.6.  Windows-Server-GeoLocation . . . . . . . . . . . . . . .  17
    11. Appendix B. EIL Example . . . . . . . . . . . . . . . . . . .  17
      11.1.  P-Model  . . . . . . . . . . . . . . . . . . . . . . . .  17
-     11.2.  I-Model  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     11.2.  I-Model  . . . . . . . . . . . . . . . . . . . . . . . .  18
      11.3.  L-Model  . . . . . . . . . . . . . . . . . . . . . . . .  18
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  18
      12.2.  Informative References . . . . . . . . . . . . . . . . .  19
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
    Nowadays, many Authoritative Nameservers support GeoIP feature, such
    as [BIND-GeoIP], [PowerDNS-GeoIP], [Amazon-Geolocation-Routing],
-   [DYN-Traffic-Director-ECS], [gdnsd-GeoIP] (More details are given in
-   Appendix A).  These geographically aware Authoritative Nameservers
-   guess the user's geolocation by the client subnet of ECS or by the
-   source IP address of DNS query, return tailor DNS response based on
-   the user's geolocation.
+   [DYN-Traffic-Director-ECS], [gdnsd-GeoIP],
+   [Windows-Server-GeoLocation] (More details are given in Appendix A).
+   These geographically aware Authoritative Nameservers guess the user's
+   geolocation by the client subnet of ECS or by the source IP address
+   of DNS query, return tailor DNS response based on the user's
+   geolocation.
 
    ECS is an EDNS0 [RFC6891] option, described in [RFC7871], carries
    client subnet information in DNS queries for Authoritative
@@ -159,16 +161,17 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    EIL is defined to convey isp location < COUNTRY, AREA, ISP >
    information that is relevant to the DNS message.  It will directly
    provide the same sufficient information for the GeoIP-enabled
+
+
+
+
+Pan & Fu                  Expires March 5, 2018                 [Page 3]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
    Authoritative Nameserver as ECS, to decide the response without
    guessing geolocation of the IP address.
-
-
-
-
-Pan & Fu                 Expires March 30, 2018                 [Page 3]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
-
 
    EIL is intended for those Local Forwarding Resolvers, Recursive
    Resolvers and Authoritative Nameservers that would benefit from the
@@ -216,16 +219,15 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    clients from < China, Beijing, Telecom > at physical topology path
    calculations result".
 
+
+
+Pan & Fu                  Expires March 5, 2018                 [Page 4]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
    EIL is satisfied if Authoritative Nameservers aggregate the IP
    addresses from the same < COUNTRY, AREA, ISP > isp location to visit
-
-
-
-Pan & Fu                 Expires March 30, 2018                 [Page 4]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
-
-
    the same datacenters, we call that GeoIP-based tailored DNS
    responses, and these tailored responses have the best "network
    topological close" distance to the users which are generated from
@@ -271,17 +273,17 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    Intermediate Forwarding Resolver: Any Forwarding Resolver in between
    the Local Forwarding Resolver and Recursive Resolver.
 
+
+
+
+
+Pan & Fu                  Expires March 5, 2018                 [Page 5]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
    Authoritative Nameserver: described in [RFC7719] and [RFC2182].  It
    is a server that knows the content of a DNS zone from local
-
-
-
-
-Pan & Fu                 Expires March 30, 2018                 [Page 5]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
-
-
    knowledge, and thus can answer queries about that zone without
    needing to query other servers.
 
@@ -331,11 +333,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-
-
-Pan & Fu                 Expires March 30, 2018                 [Page 6]
+Pan & Fu                  Expires March 5, 2018                 [Page 6]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
                  +0 (MSB)                            +1 (LSB)
@@ -389,9 +389,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                 [Page 7]
+Pan & Fu                  Expires March 5, 2018                 [Page 7]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    Authoritative Nameservers can send EIL response with the * value 0x2A
@@ -445,9 +445,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                 [Page 8]
+Pan & Fu                  Expires March 5, 2018                 [Page 8]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    EIL will be benefit if the Authoritative Nameserver could not find
@@ -501,9 +501,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                 [Page 9]
+Pan & Fu                  Expires March 5, 2018                 [Page 9]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    An Authoritative Nameserver that has implemented this protocol and
@@ -557,9 +557,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 10]
+Pan & Fu                  Expires March 5, 2018                [Page 10]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    If there was an EIL option, the Intermediate Nameserver will lookup
@@ -613,9 +613,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 11]
+Pan & Fu                  Expires March 5, 2018                [Page 11]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
  Receive EIL query:
@@ -669,9 +669,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 12]
+Pan & Fu                  Expires March 5, 2018                [Page 12]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
 6.6.  Response Accuracy
@@ -725,9 +725,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 13]
+Pan & Fu                  Expires March 5, 2018                [Page 13]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
 7.3.  Target Censorship
@@ -781,9 +781,9 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 14]
+Pan & Fu                  Expires March 5, 2018                [Page 14]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
 10.  Appendix A.  GeoIP-enabled Nameservers Example
@@ -837,9 +837,9 @@ acl "example" {
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 15]
+Pan & Fu                  Expires March 5, 2018                [Page 15]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
 domains:
@@ -893,9 +893,9 @@ domains:
 
 
 
-Pan & Fu                 Expires March 30, 2018                [Page 16]
+Pan & Fu                  Expires March 5, 2018                [Page 16]
 
-Internet-Draft         ISP Location in DNS Queries        September 2017
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
 
 
    Route 53 then responds to geolocation queries with the DNS record for
@@ -919,6 +919,14 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    monitored service availability. gdnsd supports geolocation codes,
    such as continent, country, region/subdivision, city.
 
+10.6.  Windows-Server-GeoLocation
+
+   As described in [Windows-Server-GeoLocation], Windows server can be
+   configured DNS Policy to respond to DNS client queries based on the
+   geographical location of both the client and the resource to which
+   the client is attempting to connect, providing the client with the IP
+   address of the closest resource.
+
 11.  Appendix B.  EIL Example
 
    Authoritative Nameserver of www.example.com has enabled EIL.
@@ -938,6 +946,14 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
    P-Model will not leak client subnet to Authoritative Nameserver.
 
+
+
+
+Pan & Fu                  Expires March 5, 2018                [Page 17]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
 11.2.  I-Model
 
    Stub DNS
@@ -945,14 +961,6 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    -> ISP Forwarding Resolver(202.106.196.115)
    -> ISP Recursive Resolver(61.135.23.92)
    -> Authoritative Nameserver
-
-
-
-
-Pan & Fu                 Expires March 30, 2018                [Page 17]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
-
 
    ISP Recursive Resolver 61.135.23.92 could enable EIL and generate the
    EIL OPT data < CN, 11, UNI > based on 61.135.23.92.
@@ -993,6 +1001,15 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
               and Operation of Secondary DNS Servers", RFC 2182, July
               1997.
 
+
+
+
+
+Pan & Fu                  Expires March 5, 2018                [Page 18]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
    [RFC6891]  Damas, J., Graff, M., and P. Vixie, "Extension Mechanisms
               for DNS (EDNS(0))", RFC 6891, April 2013.
 
@@ -1002,13 +1019,6 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
    [RFC7871]  Contavalli, C., van der Gasst, W., Lawrence, D., and W.
               Kumari, "Client Subnet in DNS Queries", RFC 7871, May
               2016.
-
-
-
-Pan & Fu                 Expires March 30, 2018                [Page 18]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
-
 
 12.2.  Informative References
 
@@ -1043,6 +1053,19 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
               <https://doc.powerdns.com/md/authoritative/backend-
               geoip/>.
 
+   [Windows-Server-GeoLocation]
+              Microsoft, "Use DNS Policy for Geo-Location Based Traffic
+              Management with Primary Servers",
+              <https://docs.microsoft.com/en-us/windows-
+              server/networking/dns/deploy/primary-geo-location>.
+
+
+
+Pan & Fu                  Expires March 5, 2018                [Page 19]
+
+Internet-Draft         ISP Location in DNS Queries              Sep 2017
+
+
 Authors' Addresses
 
    Lanlan Pan
@@ -1051,19 +1074,6 @@ Authors' Addresses
 
    Email: abbypan@gmail.com
    URI:   https://github.com/abbypan
-
-
-
-
-
-
-
-
-
-
-Pan & Fu                 Expires March 30, 2018                [Page 19]
-
-Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
    Yu Fu
@@ -1107,14 +1117,4 @@ Internet-Draft         ISP Location in DNS Queries        September 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-Pan & Fu                 Expires March 30, 2018                [Page 20]
+Pan & Fu                  Expires March 5, 2018                [Page 20]

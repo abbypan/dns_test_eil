@@ -1,6 +1,6 @@
 # Introduction
 
-Nowadays, many Authoritative Nameservers support GeoIP feature, such as [](#BIND-GeoIP), [](#PowerDNS-GeoIP), [](#Amazon-Geolocation-Routing), [](#DYN-Traffic-Director-ECS), [](#gdnsd-GeoIP) (More details are given in Appendix A). These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
+Nowadays, many Authoritative Nameservers support GeoIP feature, such as [](#BIND-GeoIP), [](#PowerDNS-GeoIP), [](#Amazon-Geolocation-Routing), [](#DYN-Traffic-Director-ECS), [](#gdnsd-GeoIP), [](#Windows-Server-GeoLocation) (More details are given in Appendix A). These geographically aware Authoritative Nameservers guess the user's geolocation by the client subnet of ECS or by the source IP address of DNS query, return tailor DNS response based on the user's geolocation.
 
 ECS is an [EDNS0](#RFC6891) option, described in [](#RFC7871), carries client subnet information in DNS queries for Authoritative Nameserver. Compared to source IP address of DNS query, ECS will help Authoritative Nameserver to guess the client's location more precisely because of the DNS forwarding query structure.
 
@@ -362,6 +362,10 @@ As described in [](DYN-Traffic-Director-Geographic-Groups) and [](#DYN-Traffic-D
 ## gdnsd-GeoIP
 
 As described in [](#gdnsd-GeoIP), gdnsd uses MaxMind's GeoIP binary databases to map address and CNAME results based on geography and monitored service availability. gdnsd supports geolocation codes, such as continent, country, region/subdivision, city.
+
+## Windows-Server-GeoLocation
+
+As described in [](#Windows-Server-GeoLocation), Windows server can be configured DNS Policy to respond to DNS client queries based on the geographical location of both the client and the resource to which the client is attempting to connect, providing the client with the IP address of the closest resource.
 
 # Appendix B. EIL Example
 
