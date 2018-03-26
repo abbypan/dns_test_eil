@@ -95,3 +95,15 @@
     </front>
     <format type='' target='' />
 </reference>
+
+<reference anchor='CLIENT-SUBNET-BIS' target='https://www.ietf.org/mail-archive/web/dnsop/current/msg21616.html'>
+    <front>
+        <title abbrev='CLIENT-SUBNET-BIS'>CLIENT-SUBNET bis appetite?</title>
+        <author initials='Mukund' surname='Sivaraman' fullname='Mukund Sivaraman'>
+            <organization>DNSOP</organization>
+            <address>
+                <email></email></address></author>
+        <date year='' month='' />
+    </front>
+    <format type='' target='' />
+</reference>

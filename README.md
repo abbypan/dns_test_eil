@@ -2,13 +2,11 @@
 
 install guide: [INSTALL.md](INSTALL.md)
 
+discuss solution: [solution.md](solution.md)
+
 ## Background
 
 [DNS Privacy Workshop 2017](https://www.internetsociety.org/events/ndss-symposium/ndss-symposium-2017/dns-privacy-workshop-2017-programme/dns-privacy-workshop)
-
-[Paper: EIL_Dealing_with_the_Privacy_Problem_of_ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPaG9nZ045VXRrZzg)
-
-[Slide: EILDealing with the Privacy Problem of ECS](https://drive.google.com/open?id=0B5gNT4RRJ0xPcUhuV2JlV2ZYWHc)
 
 Draft (area-code : country subdivision code)
 - latest draft: [draft.txt](ietf_draft/draft.txt)
