@@ -6,7 +6,7 @@
 <!ENTITY pandocRefinfo PUBLIC '' 'ref.info.xml'>
 ]>
 
-<rfc category="info" docName="draft-pan-dnsop-edns-isp-location-03"  ipr="trust200902">
+<rfc category="info" docName="draft-pan-dnsop-edns-isp-location-04"  ipr="trust200902">
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -51,7 +51,7 @@
             </address>
         </author>
 
-        <date month="Sep" year="2017"/>
+        <date month="Mar" year="2018"/>
 
         <area>ops</area>
         <workgroup>dnsop</workgroup>

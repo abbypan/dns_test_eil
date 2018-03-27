@@ -28,6 +28,28 @@ EIL is satisfied if authoritative nameservers aggregate the IP addresses from th
 
 ECS is satisfied if authoritative nameservers make tailored DNS response down to subnet precise level. For example, (subnet-1, ..., subnet-100) are from the same < COUNTRY, AREA, ISP > isp location, Data Provider applies (subnet-1, ..., subnet-50) visit DataCenter-1, (subnet-51, ..., subnet-100) visit DataCenter-2.
 
+# Requirements Language
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [](#RFC2119) when they appear in ALL CAPS. When these words are not in ALL CAPS (such as "should" or "Should"), they have their usual English meanings, and are not to be interpreted as [](#RFC2119) keywords.
+
+# Terminology
+
+Basic terms used in this specification are defined in the documents [](#RFC1034), [](#RFC1035), [](#RFC7719) and [](#RFC7871).
+
+EIL: EDNS ISP Location.
+
+ECS: EDNS Client Subnet, described in [](#RFC7871).
+
+Local Forwarding Resolver: forwarding resolver is described in [](#RFC7871). It is the first forwarding resolver which receives DNS queries from stub resolver, usually deployed nearby the first-hop router such as public Wi-Fi hotspot routers and home routers.
+
+Recursive Resolver: described in [](#RFC7871). It is the last-hop before authoritative nameserver in the DNS query path.
+
+Intermediate Nameserver: described in [](#RFC7871). Any nameserver in between the stub resolver and the authoritative nameserver, such as a recursive resolver or a Forwarding Resolver.
+
+Intermediate Forwarding Resolver: Any Forwarding Resolver in between the local forwarding resolver and recursive resolver.
+
+authoritative nameserver: described in [](#RFC7719) and [](#RFC2182). It is a server that knows the content of a DNS zone from local knowledge, and thus can answer queries about that zone without needing to query other servers.
+
 # Problem of ECS
 
 As mentioned in [](#RFC7871)'s abstract section, since ECS has some known operational and privacy shortcomings, a revision will be worked through the IETF for improvement.
@@ -60,28 +82,6 @@ The work is inevitable, but ECS aggravate this, because the number of client sub
 GeoIP-enabled authoritative nameserver needs a more precise IP2Geo database, updates it more frequent than before, to catch up with the huge client subnet network topology, but not the dns resolver's IP network topology.
 Every GeoIP-enabled authoritative nameserver should cost more on IP2Geo database.
 
-# Requirements Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [](#RFC2119) when they appear in ALL CAPS. When these words are not in ALL CAPS (such as "should" or "Should"), they have their usual English meanings, and are not to be interpreted as [](#RFC2119) keywords.
-
-# Terminology
-
-Basic terms used in this specification are defined in the documents [](#RFC1034), [](#RFC1035), [](#RFC7719) and [](#RFC7871).
-
-EIL: EDNS ISP Location.
-
-ECS: EDNS Client Subnet, described in [](#RFC7871).
-
-Local Forwarding Resolver: forwarding resolver is described in [](#RFC7871). It is the first forwarding resolver which receives DNS queries from stub resolver, usually deployed nearby the first-hop router such as public Wi-Fi hotspot routers and home routers.
-
-Recursive Resolver: described in [](#RFC7871). It is the last-hop before authoritative nameserver in the DNS query path.
-
-Intermediate Nameserver: described in [](#RFC7871). Any nameserver in between the stub resolver and the authoritative nameserver, such as a recursive resolver or a Forwarding Resolver.
-
-Intermediate Forwarding Resolver: Any Forwarding Resolver in between the local forwarding resolver and recursive resolver.
-
-authoritative nameserver: described in [](#RFC7719) and [](#RFC2182). It is a server that knows the content of a DNS zone from local knowledge, and thus can answer queries about that zone without needing to query other servers.
-
 # Overview
 
 EIL is an EDNS0 option to allow local forwarding resolvers and recursive resolvers, if they are willing, to forward details about the isp location of client when talking to other nameservers. EIL can be added in queries sent by local forwarding resolvers or recursive resolvers in a way that is transparent to Stub Resolvers and end users.
@@ -90,11 +90,7 @@ Like ECS, authoritative nameservers could provide a better answer by using preci
 
 EIL is only defined for the Internet (IN) DNS class.
 
-The format of EIL option is described in Section 5.
-
-The security concerns for EIL are like ECS, such as cache growth, spoof EDNS0 option and privacy, etc. Mitigation techniques are discussed in Section 6.
-
-# The EIL EDNS0 option
+## The EIL EDNS0 option
 
 The EIL is an EDNS0 option to include the isp location of client in DNS messages.
 
@@ -136,7 +132,7 @@ The null value 0x20 signifies that the field is unknown. If all fields in EIL ar
 
 authoritative nameservers can send EIL response with the * value 0x2A in AREA field or ISP field (not COUNTRY field), which signifies that the field is wildcard match. For example,  < CN, *, TEL > indicates "all area in China, Telecom ISP".
 
-Example code is in Github at: https://github.com/abbypan/dns_test_eil .
+Example code is at [](#DNS-TEST-EIL) .
 
 # Protocol Description
 
@@ -144,7 +140,7 @@ Example code is in Github at: https://github.com/abbypan/dns_test_eil .
 
 The EIL can be initialized by Public recursive resolver, ISP recursive resolver, or local forwarding resolver.
 
-Examples are given in Appendix C.
+Examples are given in Appendix B.
 
 ### P-Model: Public recursive resolver
 
@@ -179,7 +175,7 @@ If a local forwarding resolver had sent a query with EIL, and receives a REFUSE 
 
 EIL contains a whitelist for COUNTRY, AREA and ISP, which can be discussed and maintained by the DNSOP working group. authoritative nameservers that supporting EIL must only response the EIL queries matched the whitelist. recursive resolver that supporting EIL must only cache the EIL responses matched the whitelist.
 
-### authoritative nameserver
+### Authoritative Nameserver
 
 Using the isp location specified in the EIL option of DNS query, an authoritative nameserver can generate a tailored response.
 
@@ -219,19 +215,21 @@ If no EIL option was provided, but the Intermediate Nameserver want to be more a
 
 If no matching is found, the Intermediate Nameserver MUST perform resolution as usual.
 
-## Delegations and Negative Answers
+### Delegations and Negative Answers
 
 EIL's delegation case is similar with ECS, Additional and Authority Sections SHOULD ignore EIL.
 
 For negative answers, authoritative nameservers return traditional negative answers without EIL.
 
-## Transitivity
+## Deploy
+
+### Transitivity
  
 EIL's transitivity concerns are similar with ECS.
 
 Name servers should only enable EIL where it is expected to benefit the end users, such as dealing with some latency-sensitive CDN domain queries in a complex network environment.
 
-# Compatibility with non-EDNS and ECS
+### Compatibility with non-EDNS and ECS
 
 For realworld compatibility, EIL is designed as an additional feature to ECS. If a nameserver supports EIL, it must support ECS first. So there are three scenarios: non-EDNS, ECS but non-EIL, ECS and EIL.
 
@@ -251,7 +249,7 @@ The indicator that authoritative nameservers used to generate tailor response is
         | RECUR (ECS and EIL)     | Resolver's IP   | Client Subnet          | Client Subnet or EIL's < COUNTRY, AREA, ISP >|
         +-------------------------+-----------------+------------------------+----------------------------------------------+
 
-## Support ECS and EIL at the same time
+### Support ECS and EIL at the same time
 
 Name servers can support ECS and EIL at the same time. ECS and EIL can't be both initiated at the same DNS packet. It is better for user privacy if name servers initiate the EIL query prior to the ECS query.
 
@@ -297,9 +295,17 @@ AS number is not an ideal object to balance between response accuracy and user p
 
 * AS4134 contains a huge amount of IP prefixes whose geolocation covers from South China to North China, AS number can not afford the response accuracy consideration.
 
+* < COUNTRY-CODE, AREA-CODE, AS-NUMBER > may be a considerable trade-off choice on public recursive resolver, but inconvenience on local forwarding resolver.
+
 # Benefit and Cost
 
-## Cache Hitrate, Response Latency, and Cache Size
+## Client
+
+EIL is transparent to client.
+
+EIL is to help mitigate client subnet leakage on the resolution path, without sensitive identity information.
+
+## Recursive Resolver
 
 ECS sends the query with client subnet, which means that recursive resolvers have to send a new query to authoritative nameservers with client_subnet_b, even it has known the response about topological close client_subnet_a. In fact, thousands of subnets visit only a few servers, there are many redundacy queries, the recursive's cache hitrate is low.
 
@@ -309,14 +315,14 @@ Recursive's ECS cache size grows up with the number of client subnets.
 
 To sum it up, above problems all rise with the client subnet amount, especially when IPv6 addresses boom. Extend the subnet range in the ECS response may be mitigating, but not work for wide range client subnets. Recursive can make some guess optimization, if it has known response for client_subnet_a, then guess to return the same response for toplogical close client_subnet_b without send the redundancy query.
 
-Therefore, if the ECS revision wants to make more effective client subnets aggregation for recursive resolver, then EIL can be an considerable choice. 
+Therefore, if the ECS revision wants to make more effective client subnets aggregation for recursive resolver, then EIL can be an considerable choice.
 EIL wants to summary toplogical close client subnets into < COUNTRY, AREA, ISP > for GeoIP-enabled authoritative nameserver.
 With EIL response cache, recursive resolvers can directly response for many ECS client subnets queries, which will rise cache hitrate and reduce response latency.
 The cache size of EIL is related to the row count in the < COUNTRY, AREA, ISP > isp location whitelist. Therefore, under IPv6 environment, the cache size of EIL will be much smaller than ECS.
 
-Note that, the EIL mapping work make recursive resolver to cost more cpu.
+Note that, the EIL's IP2Geo mapping work will make recursive resolver to cost more cpu.
 
-## Response Accuracy Dependence
+## GeoIP-enabled Authoritative Nameserver
 
 Client subnet is the best factor if the company has good network topology monitor ability, offen is for big company.
 However, for many authoritative servers that only deployed GeoDNS, the accuracy limitation is commonly because of the IP2Geo database quality, and the small ISPs change to another next-hop big ISP suddenly.
@@ -439,21 +445,9 @@ As described in [](#gdnsd-GeoIP), gdnsd uses MaxMind's GeoIP binary databases to
 
 As described in [](#Windows-Server-GeoLocation), Windows server can be configured DNS Policy to respond to DNS client queries based on the geographical location of both the client and the resource to which the client is attempting to connect, providing the client with the IP address of the closest resource.
 
-# Appendix B. Frequent GeoIP-enabled Authoritative Nameserver's Response Accuracy Problem
+# Appendix B. EIL Example
 
-## Public Recursive Resolver with non-ECS authoritative nameserver
-
-If authoritative nameserver doesn't support ECS, the clients that use public recursive resolver(such as 8.8.8.8) may receive disaster latency IP.
-
-In this scenario, we must pray that public recursive resolver's IP is topological close to client's IP.
-
-## Unstable ISP network topology
-
-small ISP change their upstream frequently。
-
-# Appendix C. EIL Example
-
-authoritative nameserver of www.example.com has enabled EIL.
+Authoritative nameserver of www.example.com has enabled EIL.
 
 Stub DNS query A resource record of www.example.com .
 
@@ -481,6 +475,10 @@ ISP recursive resolver 61.135.23.92 could enable EIL and generate the EIL OPT da
 
 If authoritative nameserver doesn't know much about 61.135.23.92, EIL will be helpful.
 
+ISP recursive resolver generates static EIL query, simply manages response cache as tranditionl non-ECS/non-EIL scenario.
+
+EIL helps ISP recursive resolver to give upstream an explicit correct isp location information.
+
 ## L-Model
 
     Stub DNS 
@@ -491,3 +489,25 @@ If authoritative nameserver doesn't know much about 61.135.23.92, EIL will be he
 Local Fowarding Resolver 58.60.109.234 could enable EIL and generate the option data is < CN, 44, TEL > based on 58.60.109.234.
 
 L-Model can give the most precisely isp location information for DNS resolution.
+
+# Appendix C. Frequent GeoIP-enabled Authoritative Nameserver's Response Accuracy Problem
+
+## Public Recursive Resolver with non-ECS Authoritative Nameserver
+
+If authoritative nameserver doesn't support ECS, the clients that use public recursive resolver(such as 8.8.8.8) may receive disaster latency IP.
+
+In this scenario, we must pray that public recursive resolver's IP is topological close to client's IP.
+
+## IP2Geo Database Quality
+
+If authoritative nameserver's IP2Geo database misidentify client IP's information, then the client may be assigned to some high letency cross-isp IP address.
+
+With EIL, public recursive resolver and ISP recursive resolver can help to give more precise information for GeoIP-enabled authoritative nameservers.
+
+## Unstable ISP Network Topology
+
+Some small ISPs may change their upstreams frequently. Authoritative nameservers offen can not catch up the variation in time.
+
+EIL gives downstream a chance to proactively tell authoritative nameservers the latest best topological close response itself wants now. Downstream can assure itself has got explicit tailored response with EIL.
+
+For example, 218.247.200.100's isp location information is < China, Beijing, PengBoShi >. In I-Model, PengBoShi's resolver can send EIL < CN, 11, TEL > to authoritative nameservers, indicates that the best topological close response forclient 218.247.200.100 is from China Beijing Telecom.
