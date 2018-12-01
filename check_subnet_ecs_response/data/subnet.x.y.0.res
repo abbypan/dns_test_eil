@@ -1,0 +1,10 @@
+204.4.0.0/24;qq.com.edgesuite.net.;
+6.148.0.0/24;qq.com.edgesuite.net.;
+96.91.0.0/24;qq.com.edgesuite.net.;
+161.251.0.0/24;qq.com.edgesuite.net.;
+157.111.0.0/24;https.qq.com.;203.205.151.47
+180.201.0.0/24;;182.254.18.159
+121.175.0.0/24;https.qq.com.;203.205.151.47
+53.214.0.0/24;qq.com.edgesuite.net.;
+210.137.0.0/24;https.qq.com.;203.205.151.47
+183.70.0.0/24;https.qq.com.;183.3.226.35

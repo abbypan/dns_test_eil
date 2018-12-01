@@ -6,15 +6,11 @@ discuss solution: [solution.md](solution.md)
 
 ## Background
 
-[DNS Privacy Workshop 2017](https://www.internetsociety.org/events/ndss-symposium/ndss-symposium-2017/dns-privacy-workshop-2017-programme/dns-privacy-workshop)
-
 Draft (area-code : country subdivision code)
 - latest draft: [draft.txt](ietf_draft/draft.txt)
 - Status:       https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
 
-EDNS option code should be assigned by the expert review process as defined by the DNSEXT working group and the IESG. For test case, we set EIL's OPTION-CODE : 0xFDF0
-
-AREA-CODE : use ISO 3166-2 standard country subdivision code, 6 octets
+[DNS Privacy Workshop 2017](https://www.internetsociety.org/events/ndss-symposium/ndss-symposium-2017/dns-privacy-workshop-2017-programme/dns-privacy-workshop)
 
 ## Slide TOC
 
