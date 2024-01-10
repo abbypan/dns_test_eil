@@ -7,8 +7,7 @@ discuss solution: [solution.md](solution.md)
 ## Background
 
 Draft (area-code : country subdivision code)
-- latest draft: [draft.txt](ietf_draft/draft.txt)
-- Status:       https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/
+- [draft-pan-dnsop-edns-isp-location](https://datatracker.ietf.org/doc/draft-pan-dnsop-edns-isp-location/)
 
 [DNS Privacy Workshop 2017](https://www.internetsociety.org/events/ndss-symposium/ndss-symposium-2017/dns-privacy-workshop-2017-programme/dns-privacy-workshop)
 
